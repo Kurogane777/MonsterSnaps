@@ -84,36 +84,6 @@ public class MonsterController : MonoBehaviour
         return true;
     }
 
-    void LookForPlayer()
-    {
-        //Vector3 enemyPosition = transform.position;
-        //Vector3 toPlayer = target.transform.position - enemyPosition;
-
-        //toPlayer.y = 0;
-
-        //if (toPlayer.magnitude <= detectionRadiusV) // Detect by Sound and Sight
-        //{
-        //    if (Vector3.Dot(toPlayer.normalized, transform.forward) > Mathf.Cos(detectionAngle * 0.5f * Mathf.Deg2Rad))
-        //    {
-        //        if (tag == "Player")
-        //        {
-        //            Debug.Log("Player has been detected! Sight");
-        //        }
-        //    }
-        //}
-
-        //if (toPlayer.magnitude <= detectionRadiusS) // Detect by Sound
-        //{
-        //    if (Vector3.Dot(toPlayer.normalized, -transform.forward) > Mathf.Cos((360 - detectionAngle) * 0.5f * Mathf.Deg2Rad))
-        //    {
-        //        if (tag == "Player")
-        //        {
-        //            Debug.Log("Player has been detected! Sound");
-        //        }
-        //    }
-        //}
-    }
-
     void DetectRayCast(bool variable)
     {
         if (variable)
@@ -146,19 +116,6 @@ public class MonsterController : MonoBehaviour
             }
         }
     }
-
-    #region Ignore
-    //void OnDrawGizmosSelected()
-    //{
-    //    // Draw a red sphere at the transform's position
-    //    Gizmos.color = plySphereColor;
-    //    Gizmos.DrawWireSphere(transform.position, plySphereSize);
-
-    //    // Draw a blue sphere at the transform's position
-    //    Gizmos.color = atkSphereColor;
-    //    Gizmos.DrawWireSphere(transform.position, Mathf.Clamp(atkSphereSize, 0, plySphereSize));
-    //}
-    #endregion
 
 #if UNITY_EDITOR
     private void OnDrawGizmosSelected()
