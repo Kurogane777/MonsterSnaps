@@ -20,6 +20,8 @@ public class PhotoCapture : MonoBehaviour
     [Header("Audio")]
     [SerializeField] private AudioSource cameraAudio;
 
+    [Header("Target Detection")]
+    [SerializeField] private int sampleCount = 150;//how many samples to use when detecting, a number too high could cause lag spikes
     private Texture2D screenCapture;
     private bool viewingPhoto;
 
@@ -54,13 +56,93 @@ public class PhotoCapture : MonoBehaviour
 
         screenCapture.ReadPixels(regionToRead, 0, 0, false);
         screenCapture.Apply();
+        //make a new tex2D to stop duplication
         var newTex = new Texture2D(screenCapture.width, screenCapture.height);
         newTex.SetPixels(screenCapture.GetPixels());
-        newTex.Apply();
-        //make a new tex2D to stop duplication
-        PhotoBook.main.allPictures.Add(new Picture(Time.time.ToString(), newTex));
+        newTex.Apply();//remember to apply the changes when you update a texture
+        
+        PhotoBook.main.allPictures.Add(new Picture(Time.time.ToString(), newTex, GetTargets(Camera.main)));
         ShowPhoto();
     }
+
+    public List<CaptureTarget> GetTargets(Camera cam)
+    {
+        List<CaptureTarget> targs = new List<CaptureTarget>();
+        GameObject[] taggedObjects = GameObject.FindGameObjectsWithTag("Enemy");//whatever the target's tag is
+        Plane[] planes = GeometryUtility.CalculateFrustumPlanes(cam);
+        foreach (GameObject obj in taggedObjects)
+        {
+            var rend = obj.GetComponent<Renderer>();
+            if (rend)
+            {
+                var bounds = rend.bounds;
+                if (GeometryUtility.TestPlanesAABB(planes, bounds))//is it in the camera's frustum
+                {
+                    int failures = 0;//how many tests dont hit the target (something is blocking)
+                    int tests = accuracy;//the amounts of tests to do
+                    int trueTests = tests;//the amount of tests that were actually on target
+                    for (int i = 0; i < tests; i++)
+                    {
+                        var p = bounds.center + MultiplyVector(Random.insideUnitSphere, bounds.size);//distribute the tests across the bounds of the collider
+                        var dir = p - cam.transform.position;
+                        var hits = Physics.RaycastAll(cam.transform.position, dir.normalized, dir.magnitude);//get all colliders along a path/ray
+                        bool onTarget = false;//has the ray actually hit the target
+                        Vector3 targetHit = Vector3.zero;
+                        bool blocked = false;
+                        List<Vector3> blockedHits = new List<Vector3>();//all blocking hits
+                        foreach (var hit in hits)//for each of the colliders hit
+                        {
+                            if (hit.collider.gameObject == obj)//did we hit the target
+                            {
+                                onTarget = true;
+                                targetHit = hit.point;
+                                //Debug.DrawRay(cam.transform.position, dir, Color.green * new Color(1, 1, 1, 0.5f));
+                                //Debug.DrawRay(hit.point, Vector3.up * 0.1f, Color.green, 0.2f);
+                            }
+                            else
+                            {
+                                blocked = true;
+                                blockedHits.Add(hit.point);
+                            }
+                        }
+                        if (onTarget)
+                        {
+                            if (blocked && blockedHits.Count > 0)
+                            {
+                                foreach (var block in blockedHits)
+                                {
+                                    if (Vector3.Dot(dir.normalized, (block - targetHit).normalized) < 0.95f)//the blocked hit isnt behind the target
+                                    {
+                                        //Debug.DrawRay(block, Vector3.up * 0.1f, Color.red, 0.2f);
+                                        failures++;
+                                        break;
+                                    }
+                                    else
+                                    {
+                                        //Debug.DrawRay(block, Vector3.up * 0.1f, Color.yellow, 0.2f);
+                                    }
+                                }
+                            }
+                        }
+                        else
+                        {
+                            trueTests--;
+                        }
+                    }
+                    float visibility = trueTests == 0 ? 0 : (float)failures / (float)trueTests;//make sure to account for all misses
+                    targs.Add(new CaptureTarget(obj.name, visibility))
+                }
+            }
+        }
+        return targs;
+    }
+    public static Vector3 MultiplyVector(Vector3 a, Vector3 b)//just multiplies the values of two vectors
+    {
+        Vector3 v = new Vector3(a.x * (b.x), a.y * (b.y), a.z * (b.z));
+        return v;
+    }
+
+
 
     void ShowPhoto()
     {

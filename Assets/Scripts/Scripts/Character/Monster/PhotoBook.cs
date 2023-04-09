@@ -75,19 +75,19 @@ public class PhotoBook : MonoBehaviour
             
         }
     }
-    List<Picture> GetPage(int pageIndex)//returns a list of items for that page index
+    List<Picture> GetPage(int pageIndex, List<Picture> pool = allPictures)//returns a list of items for that page index
     {
         if (pageSize < 1)//page size needs to be higher than none and non-negative
             pageSize = 1;
-        int pageCount = Mathf.CeilToInt((float)allPictures.Count / pageSize);//how many pages you have
+        int pageCount = Mathf.CeilToInt((float)pool.Count / pageSize);//how many pages you have
         pageIndex = Mathf.Clamp(pageIndex,0,pageCount);//keep it in range
         var page = new List<Picture>();// create a new list to return
         for (int i = 0; i < pageSize; i++)
         {
             int index = (pageIndex * pageSize) + i;// gets the indexof the group
-            if (index > allPictures.Count - 1)// cancel if we have reached the end
+            if (index > pool.Count - 1)// cancel if we have reached the end
                 break;
-            page.Add(allPictures[index]);//add it to the return list
+            page.Add(pool[index]);//add it to the return list
         }
         return page;
     }
@@ -96,13 +96,23 @@ public class PhotoBook : MonoBehaviour
 public class Picture
 {
     public string name;//i just used this for my example its not needed really
-    public Texture2D img;//the image to display
-    public string[] contents;//a list of all objects in the image, set when you take the picture (this could be something other than a string if you want)
+    public List<CaptureTarget> targets;//a list of all objects in the image, set when you take the picture (this could be something other than a string if you want)
     public Texture2D texture;
     //any other data you want in here
-    public Picture(string name,Texture2D texture)
+    public Picture(string name,Texture2D texture, List<CaptureTarget> targets)
     {
         this.texture = texture;
+        this.name = name;
+        this.targets = targets;
+    }
+}
+public class CaptureTarget
+{
+    string name;
+    float visibiity;
+    public CaptureTarget(string name, float visibility)
+    {
+        this.visibiity = visibiity;
         this.name = name;
     }
 }
