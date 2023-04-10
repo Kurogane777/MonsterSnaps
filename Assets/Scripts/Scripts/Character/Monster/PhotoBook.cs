@@ -54,7 +54,7 @@ public class PhotoBook : MonoBehaviour
         {
             Destroy(child.gameObject);
         }
-        foreach (var item in GetPage(page))//creates all the images you need
+        foreach (var item in GetPage(page,allPictures))//creates all the images you need
         {
             var obj = Instantiate(displayPrefab, pagePlace);//create the prefab
             //set the image and whatever you want here (im using text for an example)
@@ -66,7 +66,7 @@ public class PhotoBook : MonoBehaviour
         {
             Destroy(child.gameObject);
         }
-        foreach (var item in GetPage(page+1))//creates all the images you need
+        foreach (var item in GetPage(page+1,allPictures))//creates all the images you need
         {
             var obj = Instantiate(displayPrefab, pagePlace2);//create the prefab
             //set the image and whatever you want here (im using text for an example)
@@ -75,7 +75,7 @@ public class PhotoBook : MonoBehaviour
             
         }
     }
-    List<Picture> GetPage(int pageIndex, List<Picture> pool = allPictures)//returns a list of items for that page index
+    List<Picture> GetPage(int pageIndex, List<Picture> pool)//returns a list of items for that page index
     {
         if (pageSize < 1)//page size needs to be higher than none and non-negative
             pageSize = 1;
@@ -106,13 +106,14 @@ public class Picture
         this.targets = targets;
     }
 }
+[System.Serializable]
 public class CaptureTarget
 {
-    string name;
-    float visibiity;
+    public string name;
+    public float visibility;
     public CaptureTarget(string name, float visibility)
     {
-        this.visibiity = visibiity;
+        this.visibility = visibility;
         this.name = name;
     }
 }

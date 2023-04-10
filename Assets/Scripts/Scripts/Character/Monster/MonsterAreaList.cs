@@ -21,12 +21,12 @@ public class MonsterAreaList : MonoBehaviour
         }
     }
 
-    public void GetRandomWildMonster()
+    public GameObject GetRandomWildMonster()
     {
         int randVal = Random.Range(1, 101);
         var monsterRecord = wildMonsters.First(m => randVal >= m.chanceLower && randVal <= m.chanceUpper);
 
-        var wildMonster = monsterRecord.monster;
+        return monsterRecord.monster;
     }
 
     [System.Serializable]

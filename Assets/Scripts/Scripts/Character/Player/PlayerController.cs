@@ -18,6 +18,8 @@ public class PlayerController : MonoBehaviour
     [SerializeField] SecondPersonMovemnt _sPMove;
     [SerializeField] ThirdPersonMovemnt _tPMove;
 
+    public static PlayerController main;
+
     public enum State
     { movement, croutch, photo, projectile }
 
@@ -32,6 +34,8 @@ public class PlayerController : MonoBehaviour
     void Awake()
     {
         currentState = State.movement;
+        if (main) Destroy(gameObject);
+        main = this;
     }
 
     void Update()

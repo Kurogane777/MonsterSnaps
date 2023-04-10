@@ -79,7 +79,7 @@ public class PhotoCapture : MonoBehaviour
                 if (GeometryUtility.TestPlanesAABB(planes, bounds))//is it in the camera's frustum
                 {
                     int failures = 0;//how many tests dont hit the target (something is blocking)
-                    int tests = accuracy;//the amounts of tests to do
+                    int tests = sampleCount;//the amounts of tests to do
                     int trueTests = tests;//the amount of tests that were actually on target
                     for (int i = 0; i < tests; i++)
                     {
@@ -96,7 +96,7 @@ public class PhotoCapture : MonoBehaviour
                             {
                                 onTarget = true;
                                 targetHit = hit.point;
-                                //Debug.DrawRay(cam.transform.position, dir, Color.green * new Color(1, 1, 1, 0.5f));
+                                Debug.DrawRay(cam.transform.position, dir, Color.green * new Color(1, 1, 1, 0.5f));
                                 //Debug.DrawRay(hit.point, Vector3.up * 0.1f, Color.green, 0.2f);
                             }
                             else
@@ -113,13 +113,13 @@ public class PhotoCapture : MonoBehaviour
                                 {
                                     if (Vector3.Dot(dir.normalized, (block - targetHit).normalized) < 0.95f)//the blocked hit isnt behind the target
                                     {
-                                        //Debug.DrawRay(block, Vector3.up * 0.1f, Color.red, 0.2f);
+                                        Debug.DrawRay(block, Vector3.up * 0.1f, Color.red, 0.2f);
                                         failures++;
                                         break;
                                     }
                                     else
                                     {
-                                        //Debug.DrawRay(block, Vector3.up * 0.1f, Color.yellow, 0.2f);
+                                        Debug.DrawRay(block, Vector3.up * 0.1f, Color.yellow, 0.2f);
                                     }
                                 }
                             }
@@ -130,7 +130,7 @@ public class PhotoCapture : MonoBehaviour
                         }
                     }
                     float visibility = trueTests == 0 ? 0 : (float)failures / (float)trueTests;//make sure to account for all misses
-                    targs.Add(new CaptureTarget(obj.name, visibility))
+                    targs.Add(new CaptureTarget(obj.name, visibility));
                 }
             }
         }
