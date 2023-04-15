@@ -10,11 +10,14 @@ public class MonsterController : MonoBehaviour
     [SerializeField] private MonsterChase mChase;
 
     [SerializeField] DetectionZone detectionZone;
-    [SerializeField] GameObject target;
+    GameObject target;
 
     [Header("Detect and Lost Player")]
+    [SerializeField] private GameObject expressionSlot;
     [SerializeField] private GameObject dPlyerParticles;
     [SerializeField] private GameObject lPlyerParticles;
+    [SerializeField] GameObject expressionObj;
+    [SerializeField] bool exclaimationMark;
 
     [Header("Detection Range")]
     public float detectionRadiusV = 10.0f; // V = view
@@ -90,12 +93,25 @@ public class MonsterController : MonoBehaviour
             target = null;
         }
 
-        if (target != null)
+        // Do the action after getting the Target
+        if (target != null) { Action(); }
+    }
+
+    void Action()
+    {
+        if (LookForPlayerSoundSight() == true && AttackPlayerRange() == false) { currentState = State.chase; } 
+        if (LookForPlayerSoundSight() == true) // ExclaimationMark
         {
-            if (LookForPlayerSoundSight() == true && AttackPlayerRange() == false) { currentState = State.chase; }
-            if (AttackPlayerRange() == true) { currentState = State.attack; }
-            if (OutofRangePlayer() == false) { currentState = State.patrol; }
-        }
+            if (exclaimationMark == false)
+            {
+                expressionObj = Instantiate(dPlyerParticles, expressionSlot.transform.position, Quaternion.identity);
+                expressionObj.transform.SetParent(expressionSlot.transform);
+                exclaimationMark = true;
+            }
+        } 
+        if (expressionObj == null) { expressionObj = null; } 
+        if (AttackPlayerRange() == true) { currentState = State.attack; } 
+        if (OutofRangePlayer() == false) { currentState = State.patrol; exclaimationMark = false; }
     }
 
     bool LookForPlayerSoundSight()
@@ -111,7 +127,7 @@ public class MonsterController : MonoBehaviour
             {
                 if (target)
                 {
-                    Debug.Log("Player has been detected! Sight");
+                    //Debug.Log("Player has been detected! Sight");
                     return true;
                 }
             }
@@ -123,7 +139,7 @@ public class MonsterController : MonoBehaviour
             {
                 if (target)
                 {
-                    Debug.Log("Player has been detected! Sound");
+                    //Debug.Log("Player has been detected! Sound");
                     return true;
                 }
             }
@@ -141,7 +157,7 @@ public class MonsterController : MonoBehaviour
 
         if (toPlayer.magnitude <= atkRadiusSize) // Attack Player Range
         {
-            Debug.Log("Attack Player!");
+            //Debug.Log("Attack Player!");
             return true;
         }
 
@@ -157,7 +173,7 @@ public class MonsterController : MonoBehaviour
 
         if (toPlayer.magnitude <= plyRadiusSize) // Out of Player Range
         {
-            Debug.Log("Chase Player!");
+            //Debug.Log("Chase Player!");
             return true;
         }
 

@@ -93,6 +93,7 @@ public class PlayerController : MonoBehaviour
     public void DamagePlayerFunction()
     {
         healthSystem.Damage();
+        knockBackSystem.Kfunction();
     }
 
     public int GetSurroundingMonsters()
