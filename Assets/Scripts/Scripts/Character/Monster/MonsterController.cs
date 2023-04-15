@@ -8,7 +8,9 @@ public class MonsterController : MonoBehaviour
     [SerializeField] private MonsterPatrol mPatrol;
     [SerializeField] private MonsterRunAway mRun;
     [SerializeField] private MonsterChase mChase;
-    [SerializeField] private DetectionZone dZone;
+
+    [SerializeField] DetectionZone detectionZone;
+    [SerializeField] GameObject target;
 
     [Header("Detect and Lost Player")]
     [SerializeField] private GameObject dPlyerParticles;
@@ -23,16 +25,14 @@ public class MonsterController : MonoBehaviour
     [SerializeField] bool detectionGizmo;
 
     [Header("<Player Range>")]
-    [SerializeField] private Color plyRadiusColor = new Color(255f, 255f, 255f, 0.2f);
-    [SerializeField] private float plyRadiusSize = 8f;
+    [SerializeField] private Color plyRadiusColor = new Color(0f, 50f, 90f, 0.3f);
+    [SerializeField] private float plyRadiusSize = 11f;
     [SerializeField] bool playerGizmo;
 
     [Header("<Attack Range>")]
     [SerializeField] private Color atkRadiusColor = new Color(255f, 255f, 255f, 0.15f);
     [SerializeField] private float atkRadiusSize = 5f;
     [SerializeField] bool attackGizmo;
-
-    private GameObject player;
 
     public enum State
     { patrol, run, chase, attack, hide, attract, Scare }
@@ -46,6 +46,8 @@ public class MonsterController : MonoBehaviour
 
     private void Update()
     {
+        DetectForPlayer();
+
         // Movement Control State
         switch (currentState)
         {
@@ -74,52 +76,108 @@ public class MonsterController : MonoBehaviour
             case State.attract:
                 break;
         }
-
-        DetectRayCast(true);
-        AttackRayCast();
     }
 
-    bool Detect()
+    void DetectForPlayer()
     {
-        return true;
-    }
-
-    void DetectRayCast(bool variable)
-    {
-        if (variable)
+        if (detectionZone.detectedObjs.Count > 0)
         {
-            Collider[] hitColliders = Physics.OverlapSphere(transform.position, plyRadiusSize);
-            foreach (var hitCollider in hitColliders)
-            {
-                if (hitCollider.tag == "Player")
-                {
-                    currentState = State.chase;
-                }
-                else
-                {
-                    currentState = State.patrol;
-                }
-            }
+            // Calculate direction to target object
+            target = detectionZone.detectedObjs[0].gameObject;
+        }
+        else
+        {
+            target = null;
+        }
+
+        if (target != null)
+        {
+            if (LookForPlayerSoundSight() == true && AttackPlayerRange() == false) { currentState = State.chase; }
+            if (AttackPlayerRange() == true) { currentState = State.attack; }
+            if (OutofRangePlayer() == false) { currentState = State.patrol; }
         }
     }
 
-    void AttackRayCast()
+    bool LookForPlayerSoundSight()
     {
-        Collider[] hitColliders = Physics.OverlapSphere(transform.position, Mathf.Clamp(atkRadiusSize, 0, plyRadiusSize));
-        foreach (var hitCollider in hitColliders)
-        {
-            if (hitCollider.tag == "Player")
-            {
-                DetectRayCast(false);
+        Vector3 enemyPosition = transform.position;
+        Vector3 toPlayer = target.transform.position - enemyPosition;
 
-                currentState = State.attack;
+        toPlayer.y = 0;
+
+        if (toPlayer.magnitude <= detectionRadiusV) // Detect by Sound and Sight
+        {
+            if (Vector3.Dot(toPlayer.normalized, transform.forward) > Mathf.Cos(detectionAngle * 0.5f * Mathf.Deg2Rad))
+            {
+                if (target)
+                {
+                    Debug.Log("Player has been detected! Sight");
+                    return true;
+                }
             }
         }
+
+        if (toPlayer.magnitude <= detectionRadiusS) // Detect by Sound
+        {
+            if (Vector3.Dot(toPlayer.normalized, -transform.forward) > Mathf.Cos((360 - detectionAngle) * 0.5f * Mathf.Deg2Rad))
+            {
+                if (target)
+                {
+                    Debug.Log("Player has been detected! Sound");
+                    return true;
+                }
+            }
+        }
+
+        return false;
+    }
+
+    bool AttackPlayerRange()
+    {
+        Vector3 enemyPosition = transform.position;
+        Vector3 toPlayer = target.transform.position - enemyPosition;
+
+        toPlayer.y = 0;
+
+        if (toPlayer.magnitude <= atkRadiusSize) // Attack Player Range
+        {
+            Debug.Log("Attack Player!");
+            return true;
+        }
+
+        return false;
+    }
+
+    bool OutofRangePlayer()
+    {
+        Vector3 enemyPosition = transform.position;
+        Vector3 toPlayer = target.transform.position - enemyPosition;
+
+        toPlayer.y = 0;
+
+        if (toPlayer.magnitude <= plyRadiusSize) // Out of Player Range
+        {
+            Debug.Log("Chase Player!");
+            return true;
+        }
+
+        return false;
     }
 
 #if UNITY_EDITOR
     private void OnDrawGizmosSelected()
     {
+        if (playerGizmo)
+        {
+            // Attack Player Radius
+            Color c = plyRadiusColor;
+            UnityEditor.Handles.color = c;
+
+            Vector3 fullPlyR = transform.forward;
+
+            UnityEditor.Handles.DrawSolidArc(transform.position, Vector3.up, fullPlyR, 360, plyRadiusSize);
+        }
+
         if (detectionGizmo)
         {
             // Detect Sound and Sight Radius
@@ -137,17 +195,6 @@ public class MonsterController : MonoBehaviour
             Vector3 rotatedBack = Quaternion.Euler(0, -(360 - detectionAngle) * 0.5f, 0) * -transform.forward;
 
             UnityEditor.Handles.DrawSolidArc(transform.position, Vector3.up, rotatedBack, 360 - detectionAngle, detectionRadiusS);
-        }
-
-        if (playerGizmo)
-        {
-            // Attack Player Radius
-            Color c = plyRadiusColor;
-            UnityEditor.Handles.color = c;
-
-            Vector3 fullPlyR = transform.forward;
-
-            UnityEditor.Handles.DrawSolidArc(transform.position, Vector3.up, fullPlyR, 360, plyRadiusSize);
         }
 
         if (attackGizmo)

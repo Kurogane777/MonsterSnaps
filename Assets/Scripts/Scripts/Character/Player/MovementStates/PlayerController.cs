@@ -12,6 +12,8 @@ public class PlayerController : MonoBehaviour
     [Header("Other Functions")]
     [SerializeField] GameObject PhotoSystem;
     [SerializeField] GameObject ProjectileSystem;
+    [SerializeField] PlayerHealth healthSystem;
+    [SerializeField] KnockBack knockBackSystem;
 
     [Space]
     [SerializeField] FirstPersonMovemnt _fPMove;
@@ -22,7 +24,7 @@ public class PlayerController : MonoBehaviour
     public static PlayerController main;
 
     public enum State
-    { movement, croutch, photo, projectile }
+    { movement, damage, croutch, photo, projectile }
 
     [Space]
     public State currentState;
@@ -32,15 +34,11 @@ public class PlayerController : MonoBehaviour
 
     public Area area;
 
-    CharacterController CC;
-    Vector3 knockback;
-
     void Awake()
     {
         currentState = State.movement;
         if (main) Destroy(gameObject);
         main = this;
-        CC = GetComponent<CharacterController>();
     }
 
     void Update()
@@ -50,6 +48,10 @@ public class PlayerController : MonoBehaviour
         {
             case State.movement:
                 MovementFunction();
+                break;
+
+            case State.damage:
+                DamagePlayerFunction();
                 break;
 
             case State.croutch:
@@ -63,11 +65,6 @@ public class PlayerController : MonoBehaviour
                 ProjectileFunction();
                 break;
         }
-        if (Input.GetKeyDown(KeyCode.F1))
-            knockback = Vector3.right/10;//use tranform.forward of the enemy
-
-        CC.Move(knockback);
-        knockback *= 0.95f;
     }
 
     void MovementFunction()
@@ -93,6 +90,11 @@ public class PlayerController : MonoBehaviour
 
     }
 
+    public void DamagePlayerFunction()
+    {
+        healthSystem.Damage();
+    }
+
     public int GetSurroundingMonsters()
     {
         int count = 0;
@@ -106,6 +108,7 @@ public class PlayerController : MonoBehaviour
         }
         return 0;
     }
+
     void AreaFunction()
     {
         switch (area)

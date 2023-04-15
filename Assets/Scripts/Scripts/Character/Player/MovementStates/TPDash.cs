@@ -9,19 +9,9 @@ public class TPDash : MonoBehaviour
     public float dashSpeed;
     public float dashTime;
 
-    // Start is called before the first frame update
     void Start()
     {
         moveScript = GetComponent<ThirdPersonMovemnt>();
-    }
-
-    // Update is called once per frame
-    public void Update()
-    {
-        //if (Input.GetMouseButtonDown(0))
-        //{
-        //    Dfunction();
-        //}
     }
 
     public void Dfunction()

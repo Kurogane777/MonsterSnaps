@@ -59,7 +59,7 @@ public class SpriteDirectionalController : MonoBehaviour
             animationDirection = new Vector2(0f, 1f);
         }
 
-        animator.SetFloat("moveX", animationDirection.x);
-        animator.SetFloat("moveY", animationDirection.y);
+        animator.SetFloat("MoveX", animationDirection.x);
+        animator.SetFloat("MoveY", animationDirection.y);
     }
 }
