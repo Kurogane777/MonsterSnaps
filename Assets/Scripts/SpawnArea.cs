@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class spawnTHingIDK : MonoBehaviour
+public class SpawnArea : MonoBehaviour
 {
     public float spawnTime = 4;
     public float spawnRadius = 10;
@@ -23,9 +23,8 @@ public class spawnTHingIDK : MonoBehaviour
         {
             timer = spawnTime;
             //spawn
-            bool hit = RandomPointWithinSpheres(PlayerController.main.transform.position, pRad, transform.position, spawnRadius, out Vector3 point);
-            if (hit)
-                Instantiate(list.GetRandomWildMonster(), point, Quaternion.identity);
+            if (RandomPointWithinSpheres(PlayerController.main.transform.position, pRad, transform.position, spawnRadius, out Vector3 point))
+                SpawnController.main.SpawnMonster(list.GetRandomWildMonster(), point);
         }
     }
     public bool RandomPointWithinSpheres(Vector3 posA, float radiusA, Vector3 posB, float radiusB, out Vector3 pos)

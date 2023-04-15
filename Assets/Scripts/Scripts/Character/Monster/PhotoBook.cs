@@ -59,6 +59,8 @@ public class PhotoBook : MonoBehaviour
             var obj = Instantiate(displayPrefab, pagePlace);//create the prefab
             //set the image and whatever you want here (im using text for an example)
             obj.transform.GetChild(1).GetComponent<Text>().text = item.name;
+            Debug.Log(item.name);
+            obj.transform.GetChild(3).GetComponent<Text>().text = item.GetStars();
             obj.transform.GetChild(0).GetComponent<RawImage>().texture = item.texture;
         }
         //incase you wanted 2 pages
@@ -71,8 +73,8 @@ public class PhotoBook : MonoBehaviour
             var obj = Instantiate(displayPrefab, pagePlace2);//create the prefab
             //set the image and whatever you want here (im using text for an example)
             obj.transform.GetChild(1).GetComponent<Text>().text = item.name;
+            obj.transform.GetChild(3).GetComponent<Text>().text = item.GetStars();
             obj.transform.GetChild(0).GetComponent<RawImage>().texture = item.texture;
-            
         }
     }
     List<Picture> GetPage(int pageIndex, List<Picture> pool)//returns a list of items for that page index
@@ -97,23 +99,50 @@ public class Picture
 {
     public string name;//i just used this for my example its not needed really
     public List<CaptureTarget> targets;//a list of all objects in the image, set when you take the picture (this could be something other than a string if you want)
+    public CaptureTarget mainTarget;
     public Texture2D texture;
+    public float score = 1;
     //any other data you want in here
-    public Picture(string name,Texture2D texture, List<CaptureTarget> targets)
+    public Picture(Texture2D texture, List<CaptureTarget> targets)
     {
         this.texture = texture;
-        this.name = name;
         this.targets = targets;
+        GetScore();
+    }
+    void GetScore()
+    {
+        if (targets.Count > 0)
+        {
+            float m = 1;
+            foreach (var targ in targets)
+            {
+                if (m > targ.unvisibility)
+                {
+                    m = targ.unvisibility;
+                    mainTarget = targ;
+                    name = targ.name;
+                }
+            }
+        }
+    }
+    public string GetStars()
+    {
+        string s = "*****";
+        for (int i = 0; i <= Mathf.RoundToInt(score*5); i++)
+        {
+            s.Substring(0,1);
+        }
+        return s;
     }
 }
 [System.Serializable]
 public class CaptureTarget
 {
     public string name;
-    public float visibility;
+    public float unvisibility;
     public CaptureTarget(string name, float visibility)
     {
-        this.visibility = visibility;
+        this.unvisibility = visibility;
         this.name = name;
     }
 }

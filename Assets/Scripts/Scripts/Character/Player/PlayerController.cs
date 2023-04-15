@@ -17,7 +17,8 @@ public class PlayerController : MonoBehaviour
     [SerializeField] FirstPersonMovemnt _fPMove;
     [SerializeField] SecondPersonMovemnt _sPMove;
     [SerializeField] ThirdPersonMovemnt _tPMove;
-
+    [Space]
+    [SerializeField] float spawnRadius = 10;
     public static PlayerController main;
 
     public enum State
@@ -31,11 +32,15 @@ public class PlayerController : MonoBehaviour
 
     public Area area;
 
+    CharacterController CC;
+    Vector3 knockback;
+
     void Awake()
     {
         currentState = State.movement;
         if (main) Destroy(gameObject);
         main = this;
+        CC = GetComponent<CharacterController>();
     }
 
     void Update()
@@ -58,6 +63,11 @@ public class PlayerController : MonoBehaviour
                 ProjectileFunction();
                 break;
         }
+        if (Input.GetKeyDown(KeyCode.F1))
+            knockback = Vector3.right/10;//use tranform.forward of the enemy
+
+        CC.Move(knockback);
+        knockback *= 0.95f;
     }
 
     void MovementFunction()
@@ -83,6 +93,19 @@ public class PlayerController : MonoBehaviour
 
     }
 
+    public int GetSurroundingMonsters()
+    {
+        int count = 0;
+        var cols = Physics.OverlapSphere(transform.position, spawnRadius);
+        foreach (var c in cols)
+        {
+            if (c.CompareTag("Enemy"))
+            {
+                count++;
+            }
+        }
+        return 0;
+    }
     void AreaFunction()
     {
         switch (area)

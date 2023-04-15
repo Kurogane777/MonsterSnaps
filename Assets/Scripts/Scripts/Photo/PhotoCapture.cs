@@ -60,8 +60,9 @@ public class PhotoCapture : MonoBehaviour
         var newTex = new Texture2D(screenCapture.width, screenCapture.height);
         newTex.SetPixels(screenCapture.GetPixels());
         newTex.Apply();//remember to apply the changes when you update a texture
-        
-        PhotoBook.main.allPictures.Add(new Picture(Time.time.ToString(), newTex, GetTargets(Camera.main)));
+        var caps = GetTargets(Camera.main);
+        PhotoBook.main.allPictures.Add(new Picture(newTex,caps));
+        MonsterDex.main.Captured(caps);
         ShowPhoto();
     }
 
@@ -85,6 +86,7 @@ public class PhotoCapture : MonoBehaviour
                     {
                         var p = bounds.center + MultiplyVector(Random.insideUnitSphere, bounds.size);//distribute the tests across the bounds of the collider
                         var dir = p - cam.transform.position;
+                        // you can put a layermask into the following line's RayCastAll to block some layers from triggering the blockage
                         var hits = Physics.RaycastAll(cam.transform.position, dir.normalized, dir.magnitude);//get all colliders along a path/ray
                         bool onTarget = false;//has the ray actually hit the target
                         Vector3 targetHit = Vector3.zero;
@@ -130,7 +132,13 @@ public class PhotoCapture : MonoBehaviour
                         }
                     }
                     float visibility = trueTests == 0 ? 0 : (float)failures / (float)trueTests;//make sure to account for all misses
-                    targs.Add(new CaptureTarget(obj.name, visibility));
+                    if (obj.TryGetComponent(out nameCharMonster name))
+                    {
+                        string n = name.objName;
+                        if (string.IsNullOrEmpty(n))
+                            n = "NO_NAME_FOUND";
+                        targs.Add(new CaptureTarget(n, visibility));
+                    }
                 }
             }
         }
