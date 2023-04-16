@@ -10,7 +10,7 @@ public class MonsterController : MonoBehaviour
     [SerializeField] private MonsterChase mChase;
 
     [SerializeField] DetectionZone detectionZone;
-    GameObject target;
+    public GameObject target;
 
     [Header("Detect and Lost Player")]
     [SerializeField] private GameObject expressionSlot;

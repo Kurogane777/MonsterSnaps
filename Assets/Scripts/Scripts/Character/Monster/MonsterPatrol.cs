@@ -5,14 +5,10 @@ using System.Collections;
 
 public class MonsterPatrol : MonoBehaviour
 {
-
     //public Transform[] points;
-    public PatrolList pList;
+    PatrolList pList;
     private int destPoint = 0;
     private NavMeshAgent agent;
-
-    public bool LOL;
-
 
     void Start()
     {
@@ -65,7 +61,7 @@ public class MonsterPatrol : MonoBehaviour
 
     void Update()
     {
-        if (!enabled) { pList = null; LOL = false; }
+        if (!enabled) { pList = null; }
 
         NearestPoint();
 

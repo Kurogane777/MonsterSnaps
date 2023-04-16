@@ -5,18 +5,24 @@ using UnityEngine.AI;
 
 public class MonsterChase : MonoBehaviour
 {
-    public GameObject target;
+    MonsterController monC;
+    private GameObject target;
     private NavMeshAgent _agent;
 
     void Start()
     {
-        target = GameObject.Find("Player");
+        monC = GetComponent<MonsterController>();
         _agent = GetComponent<NavMeshAgent>();
     }
 
-    private void Update()
+    void Update()
     {
-        _agent.destination = target.transform.position;
+        target = monC.target;
+
+        if (target != null)
+        {
+            _agent.SetDestination(target.transform.position);
+        }
     }
 
 }
