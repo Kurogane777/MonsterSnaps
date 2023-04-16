@@ -29,4 +29,9 @@ public class PauseController : MonoBehaviour
             }
         }
     }
+
+    public void ResumeR()
+    {
+        Time.timeScale = 1;
+    }
 }

@@ -22,7 +22,7 @@ public class PhotoBook : MonoBehaviour
         page2.gameObject.SetActive(open);
         //Populate();//call this every time you change page
     }
-    private void Update()
+    public void InputPressInventory()
     {
         if (Input.GetKeyDown(KeyCode.Escape))
         {
