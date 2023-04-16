@@ -10,14 +10,14 @@ public class MonsterController : MonoBehaviour
     [SerializeField] private MonsterChase mChase;
 
     [SerializeField] DetectionZone detectionZone;
-    public GameObject target;
+    [HideInInspector] public GameObject target;
 
     [Header("Detect and Lost Player")]
     [SerializeField] private GameObject expressionSlot;
     [SerializeField] private GameObject dPlyerParticles;
     [SerializeField] private GameObject lPlyerParticles;
-    [SerializeField] GameObject expressionObj;
-    [SerializeField] bool exclaimationMark;
+    GameObject expressionObj;
+    bool exclaimationMark;
 
     [Header("Detection Range")]
     public float detectionRadiusV = 10.0f; // V = view
@@ -37,6 +37,8 @@ public class MonsterController : MonoBehaviour
     [SerializeField] private float atkRadiusSize = 5f;
     [SerializeField] bool attackGizmo;
 
+    [SerializeField] bool LOL;
+
     public enum State
     { patrol, run, chase, attack, hide, attract, Scare }
 
@@ -50,6 +52,10 @@ public class MonsterController : MonoBehaviour
     private void Update()
     {
         DetectForPlayer();
+        ProjectileDetectRange();
+
+        // Do the action after getting the Target
+        if (target != null) { Action(); }
 
         // Movement Control State
         switch (currentState)
@@ -77,6 +83,9 @@ public class MonsterController : MonoBehaviour
             case State.hide:
                 break;
             case State.attract:
+                mPatrol.enabled = false;
+                mRun.enabled = false;
+                mChase.enabled = true;
                 break;
         }
     }
@@ -92,9 +101,11 @@ public class MonsterController : MonoBehaviour
         {
             target = null;
         }
+    }
 
-        // Do the action after getting the Target
-        if (target != null) { Action(); }
+    void DetectOnProjectile()
+    { 
+        
     }
 
     void Action()
@@ -175,6 +186,25 @@ public class MonsterController : MonoBehaviour
         {
             //Debug.Log("Chase Player!");
             return true;
+        }
+
+        return false;
+    }
+
+    bool ProjectileDetectRange()
+    {
+        Vector3 enemyPosition = transform.position;
+        Vector3 toProjectile = target.transform.position - enemyPosition;
+
+        toProjectile.y = 0;
+
+        if (toProjectile.magnitude <= plyRadiusSize)
+        {
+            if (gameObject.GetComponent<ProjectileBullet>())
+            {
+                Debug.Log("Detect Projectile!");
+                return true;
+            }
         }
 
         return false;
