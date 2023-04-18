@@ -13,7 +13,6 @@ public class PlayerController : MonoBehaviour
     [SerializeField] GameObject PhotoSystem;
     [SerializeField] GameObject ProjectileSystem;
     [SerializeField] PlayerHealth healthSystem;
-    [SerializeField] KnockBack knockBackSystem;
 
     [Space]
     [SerializeField] FirstPersonMovemnt _fPMove;
@@ -22,7 +21,8 @@ public class PlayerController : MonoBehaviour
     [Space]
     [SerializeField] float spawnRadius = 10;
     public static PlayerController main;
-
+    Vector3 knockback;
+    CharacterController CC;
     public enum State
     { movement, damage, croutch, photo, projectile }
 
@@ -39,6 +39,7 @@ public class PlayerController : MonoBehaviour
         currentState = State.movement;
         if (main) Destroy(gameObject);
         main = this;
+        CC = GetComponent<CharacterController>();
     }
 
     void Update()
@@ -65,8 +66,16 @@ public class PlayerController : MonoBehaviour
                 ProjectileFunction();
                 break;
         }
+        if (knockback.magnitude > 0.05)
+        {
+            CC.Move(knockback);
+            knockback *= 0.95f;
+        }
     }
-
+    public void ApplyKnockback(Vector3 amount)
+    {
+        knockback += amount;
+    }
     void MovementFunction()
     {
         _fPMove.enabled = false;
@@ -93,7 +102,6 @@ public class PlayerController : MonoBehaviour
     public void DamagePlayerFunction()
     {
         healthSystem.Damage();
-        knockBackSystem.Kfunction();
     }
 
     public int GetSurroundingMonsters()

@@ -17,6 +17,10 @@ public class pStates : MonoBehaviour
     {
         if (pState.currentState == PlayerController.State.movement)
         {
+            if (Input.GetKeyDown(KeyCode.Escape))
+            {
+                PhotoBook.main.Toggle();
+            }
             defaultStates.Invoke();
 
             if (!callOnce)
@@ -27,6 +31,7 @@ public class pStates : MonoBehaviour
         }
         else
         {
+            PhotoBook.main.Close();
             nonDefaultStates.Invoke();
             callOnce = false;
         }

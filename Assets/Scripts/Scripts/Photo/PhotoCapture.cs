@@ -82,6 +82,7 @@ public class PhotoCapture : MonoBehaviour
                     int failures = 0;//how many tests dont hit the target (something is blocking)
                     int tests = sampleCount;//the amounts of tests to do
                     int trueTests = tests;//the amount of tests that were actually on target
+                    float dist = Vector3.Distance(cam.transform.position, obj.transform.position);
                     for (int i = 0; i < tests; i++)
                     {
                         var p = bounds.center + MultiplyVector(Random.insideUnitSphere, bounds.size);//distribute the tests across the bounds of the collider
@@ -131,7 +132,7 @@ public class PhotoCapture : MonoBehaviour
                             trueTests--;
                         }
                     }
-                    float visibility = trueTests == 0 ? 0 : (float)failures / (float)trueTests;//make sure to account for all misses
+                    float visibility = trueTests == 0 ? 1 : ((float)failures / (float)trueTests);//make sure to account for all misses
                     if (obj.TryGetComponent(out nameCharMonster name))
                     {
                         string n = name.objName;

@@ -12,8 +12,11 @@ public class PlayerHealth : MonoBehaviour
 
     bool callOnce;
 
+    public static PlayerHealth main;
+
     void Awake()
     {
+        main = this;
         if (numberHearts > heartsUI.Count || numberHearts < heartsUI.Count)
         {
             numberHearts = heartsUI.Count;

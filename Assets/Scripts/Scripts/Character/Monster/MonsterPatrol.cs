@@ -42,7 +42,7 @@ public class MonsterPatrol : MonoBehaviour
 
     void NearestPoint()
     {
-        //GameObject[] pListArea = GameObject.FindObjectOfType<PatrolList>();
+        //GameObject[] pListArea = FindObjectOfType<PatrolList>().gameObject;
         GameObject[] pListArea = GameObject.FindGameObjectsWithTag("A");
         if (pListArea.Length > 0)
         {

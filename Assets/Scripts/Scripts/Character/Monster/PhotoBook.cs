@@ -15,22 +15,18 @@ public class PhotoBook : MonoBehaviour
     public int pageSize;//how many items fit on a single page
     bool open;
     public static PhotoBook main;
-    void Start()
+    private void Awake()
     {
         main = this;
+    }
+    void Start()
+    {
         page1.gameObject.SetActive(open);
         page2.gameObject.SetActive(open);
         //Populate();//call this every time you change page
     }
     public void InputPressInventory()
     {
-        if (Input.GetKeyDown(KeyCode.Escape))
-        {
-            open = !open;
-            page1.gameObject.SetActive(open);
-            page2.gameObject.SetActive(open);
-            Populate();
-        }
         if (Input.GetKeyDown(KeyCode.Alpha1))
         {
             page--;
@@ -39,6 +35,30 @@ public class PhotoBook : MonoBehaviour
         {
             page++;
         }
+    }
+    public void Open()
+    {
+        open = true;
+        page1.gameObject.SetActive(open);
+        page2.gameObject.SetActive(open);
+        Populate();
+
+    }
+    public void Close()
+    {
+        if (!open)
+            return;
+        open = false;
+        page1.gameObject.SetActive(open);
+        page2.gameObject.SetActive(open);
+    }
+    public void Toggle()
+    {
+        open = !open;
+        page1.gameObject.SetActive(open);
+        page2.gameObject.SetActive(open);
+        if (open)
+            Populate();
     }
     public void NextPage()
     {
@@ -111,9 +131,9 @@ public class Picture
     }
     void GetScore()
     {
+        float m = 1;
         if (targets.Count > 0)
         {
-            float m = 1;
             foreach (var targ in targets)
             {
                 if (m > targ.unvisibility)
@@ -124,14 +144,18 @@ public class Picture
                 }
             }
         }
+        score = m;
     }
     public string GetStars()
     {
-        string s = "*****";
-        for (int i = 0; i <= Mathf.RoundToInt(score*5); i++)
+        float v = 1 - score;
+        string s = "";
+        for (int i = Mathf.RoundToInt(v * 5); i >= 0; i--)
         {
-            s.Substring(0,1);
+            s += "*";
         }
+
+        Debug.Log((Mathf.RoundToInt(score * 5),s));
         return s;
     }
 }
