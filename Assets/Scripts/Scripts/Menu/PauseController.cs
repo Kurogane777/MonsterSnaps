@@ -5,13 +5,14 @@ using UnityEngine.Events;
 
 public class PauseController : MonoBehaviour
 {
+    [SerializeField] InputController inputC;
     public UnityEvent GamePaused;
     public UnityEvent GameResumed;
     private bool _isPaused;
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Escape))
+        if (Input.GetKeyDown(inputC.pause))
         {
             _isPaused = !_isPaused;
 

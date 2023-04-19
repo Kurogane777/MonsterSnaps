@@ -11,13 +11,13 @@ public class Screenshake : MonoBehaviour
 
     void Start()
     {
-        StartingPosition = transform.position;
+        StartingPosition = transform.localPosition;
     }
 
     void Update()
     {
         ShakeAmount = Mathf.Lerp(ShakeAmount, 0, 0.02f);
-        transform.position = StartingPosition + Random.onUnitSphere * ShakeAmount;
+        transform.localPosition = StartingPosition + Random.onUnitSphere * ShakeAmount;
     }
 
     public void SA()

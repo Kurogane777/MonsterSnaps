@@ -6,34 +6,63 @@ using UnityEngine.Events;
 public class pStates : MonoBehaviour
 {
     public PlayerController pState;
+
     public UnityEvent callOnceDefaltS;
+
     public UnityEvent defaultStates;
+    public UnityEvent damageStates;
+    public UnityEvent croutchStates;
+    public UnityEvent photoStates;
+    public UnityEvent projectileStates;
+
     public UnityEvent nonDefaultStates;
 
-    public bool callOnce;
+    public bool boolCallOnceDefaltS;
 
 
     private void Update()
     {
         if (pState.currentState == PlayerController.State.movement)
         {
+            defaultStates.Invoke();
+
             if (Input.GetKeyDown(KeyCode.Escape))
             {
                 PhotoBook.main.Toggle();
             }
-            defaultStates.Invoke();
 
-            if (!callOnce)
+            if (!boolCallOnceDefaltS)
             {
                 callOnceDefaltS.Invoke();
-                callOnce = true;
+                boolCallOnceDefaltS = true;
             }
         }
-        else
+        else if (pState.currentState == PlayerController.State.damage)
         {
-            PhotoBook.main.Close();
-            nonDefaultStates.Invoke();
-            callOnce = false;
+            damageStates.Invoke();
+            NonDefaultState();
         }
+        else if (pState.currentState == PlayerController.State.croutch)
+        {
+            croutchStates.Invoke();
+            NonDefaultState();
+        }
+        else if (pState.currentState == PlayerController.State.photo)
+        {
+            photoStates.Invoke();
+            NonDefaultState();
+        }
+        else if (pState.currentState == PlayerController.State.projectile)
+        {
+            projectileStates.Invoke();
+            NonDefaultState();
+        }
+    }
+
+    void NonDefaultState()
+    {
+        PhotoBook.main.Close();
+        nonDefaultStates.Invoke();
+        boolCallOnceDefaltS = false;
     }
 }

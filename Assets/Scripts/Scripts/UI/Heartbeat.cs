@@ -15,7 +15,17 @@ public class Heartbeat : MonoBehaviour
         startScale = transform.localScale;
     }
 
-    IEnumerator Start()
+    void Start()
+    {
+        StartCoroutine(StartBeat());
+    }
+
+    public void callOnceBeat()
+    {
+        StartCoroutine(StartBeat());
+    }
+
+    IEnumerator StartBeat()
     {
         startTime = Time.time;
         totalDistance = Vector3.Distance(startScale, endScale);

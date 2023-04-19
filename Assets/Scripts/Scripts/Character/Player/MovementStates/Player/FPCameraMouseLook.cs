@@ -5,15 +5,8 @@ using UnityEngine;
 public class FPCameraMouseLook : MonoBehaviour
 {
     public float mouseSensitivity = 100f;
-
     public Transform playerBody;
-
     float xRotation = 0f;
-
-    private void Start()
-    {
-        Cursor.lockState = CursorLockMode.Locked;
-    }
 
     private void Update()
     {

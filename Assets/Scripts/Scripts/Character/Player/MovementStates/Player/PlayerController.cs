@@ -10,6 +10,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] GameObject thirdViewCamera;
 
     [Header("Other Functions")]
+    [SerializeField] InputController inputC;
     [SerializeField] GameObject PhotoSystem;
     [SerializeField] GameObject ProjectileSystem;
     [SerializeField] PlayerHealth healthSystem;
@@ -104,8 +105,8 @@ public class PlayerController : MonoBehaviour
         thirdViewCamera.SetActive(true);
 
         // Change States
-        if (Input.GetKeyDown(KeyCode.R)) { currentState = State.photo; }
-        if (Input.GetKeyDown(KeyCode.E)) { currentState = State.projectile; }
+        if (Input.GetKeyDown(inputC.CSCameraPhoto)) { currentState = State.photo; }
+        if (Input.GetKeyDown(inputC.CSProjectile)) { currentState = State.projectile; }
     }
 
     void PhotoFunction()
@@ -118,8 +119,8 @@ public class PlayerController : MonoBehaviour
         thirdViewCamera.SetActive(false);
 
         // Change States
-        if (Input.GetKeyDown(KeyCode.R)) { currentState = State.movement; }
-        if (Input.GetKeyDown(KeyCode.E)) { currentState = State.projectile; }
+        if (Input.GetKeyDown(inputC.CSCameraPhoto)) { currentState = State.movement; }
+        if (Input.GetKeyDown(inputC.CSProjectile)) { currentState = State.projectile; }
     }
 
     void ProjectileFunction()
@@ -131,8 +132,8 @@ public class PlayerController : MonoBehaviour
         firstViewCamera.SetActive(true);
         thirdViewCamera.SetActive(false);
 
-        if (Input.GetKeyDown(KeyCode.E)) { currentState = State.movement; }
-        if (Input.GetKeyDown(KeyCode.R)) { currentState = State.photo; }
+        if (Input.GetKeyDown(inputC.CSProjectile)) { currentState = State.movement; }
+        if (Input.GetKeyDown(inputC.CSCameraPhoto)) { currentState = State.photo; }
     }
     #endregion
 
@@ -207,7 +208,7 @@ public class PlayerController : MonoBehaviour
         InputSystem();
 
         // Dash Function
-        if (Input.GetMouseButtonDown(0)) { Dfunction(); }
+        if (Input.GetKeyDown(inputC.dash)) { Dfunction(); }
     }
 
     void InputSystem()

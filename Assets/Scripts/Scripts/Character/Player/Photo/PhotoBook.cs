@@ -5,6 +5,8 @@ using UnityEngine.UI;
 
 public class PhotoBook : MonoBehaviour
 {
+    [SerializeField] InputController inputC;
+
     public List<Picture> allPictures = new List<Picture>();//contains all your pictures, should be stored on the gamecontroller and not here
 
     public GameObject displayPrefab;//the UI prefab for displaying an image
@@ -27,11 +29,11 @@ public class PhotoBook : MonoBehaviour
     }
     public void InputPressInventory()
     {
-        if (Input.GetKeyDown(KeyCode.Alpha1))
+        if (Input.GetKeyDown(inputC.prvInvBook))
         {
             page--;
         }
-        if (Input.GetKeyDown(KeyCode.Alpha2))
+        if (Input.GetKeyDown(inputC.nxtInvBook))
         {
             page++;
         }
