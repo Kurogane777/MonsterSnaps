@@ -8,15 +8,37 @@ public class TPDash : MonoBehaviour
 
     public float dashSpeed;
     public float dashTime;
+    public float reloadTime = 0.5f;
+    float currentReload;
+    bool boolReload;
 
     void Start()
     {
         moveScript = GetComponent<ThirdPersonMovemnt>();
+        currentReload = reloadTime;
+    }
+
+    private void Update()
+    {
+        if (boolReload)
+        {
+            currentReload -= Time.deltaTime;
+        }
+
+        if (currentReload <= 0.0f)
+        {
+            boolReload = false;
+        }
     }
 
     public void Dfunction()
     {
-        StartCoroutine(Dash());
+        if (!boolReload)
+        {
+            StartCoroutine(Dash());
+            currentReload = reloadTime;
+            boolReload = true;
+        }
     }
 
     IEnumerator Dash()

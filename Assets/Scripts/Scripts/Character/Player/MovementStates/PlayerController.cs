@@ -95,8 +95,6 @@ public class PlayerController : MonoBehaviour
     void CroutchFunction()
     {
         AreaFunction();
-
-
     }
 
     public void DamagePlayerFunction()
