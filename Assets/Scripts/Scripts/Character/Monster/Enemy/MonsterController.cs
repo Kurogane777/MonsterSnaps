@@ -5,20 +5,24 @@ using UnityEngine.AI;
 
 public class MonsterController : MonoBehaviour
 {
-    [Header("State Script")]
-    [SerializeField] private MonsterPatrol mPatrol;
-    [SerializeField] private MonsterRunAway mRun;
-    [SerializeField] private MonsterChase mChase;
-
+    [Header("Detect and Lost Player")]
     [SerializeField] DetectionZone detectionZone;
     [HideInInspector] public GameObject target;
-
-    [Header("Detect and Lost Player")]
+    [Space]
     [SerializeField] private GameObject expressionSlot;
     [SerializeField] private GameObject dPlyerParticles;
     [SerializeField] private GameObject lPlyerParticles;
     GameObject expressionObj;
     bool exclaimationMark;
+
+    [Header("Attack")]
+    public NavMeshAgent agent;
+    bool attacking;
+    public float attackDelay = 1;
+    float attackTimer, stunTimer;
+    public float stunDuration = 0.5f;
+    float nmSpeed,nmAcc;
+    public float knockback = 0.2f;
 
     [Header("Detection Range")]
     public float detectionRadiusV = 10.0f; // V = view
@@ -27,7 +31,6 @@ public class MonsterController : MonoBehaviour
     [SerializeField] Color detectVColor = new Color(0.8f, 0f, 0f, 0.4f);
     [SerializeField] Color detectSColor = new Color(0f, 0f, 0f, 0.4f);
     [SerializeField] bool detectionGizmo;
-
 
     [Header("<Player Range>")]
     [SerializeField] private Color plyRadiusColor = new Color(0f, 50f, 90f, 0.3f);
@@ -39,14 +42,6 @@ public class MonsterController : MonoBehaviour
     [SerializeField] private float atkRadiusSize = 5f;
     [SerializeField] bool attackGizmo;
 
-    [SerializeField] bool LOL;
-    public NavMeshAgent agent;
-    bool attacking;
-    public float attackDelay = 1;
-    float attackTimer, stunTimer;
-    public float stunDuration = 0.5f;
-    float nmSpeed,nmAcc;
-    public float knockback = 0.2f;
     public enum State
     { patrol, run, chase, attack, hide, attract, Scare }
 
@@ -58,6 +53,18 @@ public class MonsterController : MonoBehaviour
         agent = GetComponent<NavMeshAgent>();
         nmSpeed = agent.speed;
         nmAcc = agent.acceleration;
+
+        #region Patrol
+        // Disabling auto-braking allows for continuous movement
+        // between points (ie, the agent doesn't slow down as it
+        // approaches a destination point).
+        agent.autoBraking = false;
+
+        if (pList != null)
+        {
+            GotoNextPoint();
+        }
+        #endregion
     }
 
     private void Update()
@@ -72,121 +79,59 @@ public class MonsterController : MonoBehaviour
         switch (currentState)
         {
             case State.patrol:
-                mPatrol.enabled = true;
-                mRun.enabled = false;
-                mChase.enabled = false;
-                agent.speed = nmSpeed;
-                agent.acceleration = nmAcc;
+                PatrolFunction();
                 break;
             case State.run:
-                mPatrol.enabled = false;
-                mRun.enabled = true;
-                mChase.enabled = false;
-                agent.speed = nmSpeed;
-                agent.acceleration = nmAcc;
+                RunFunction();
                 break;
             case State.chase:
-                mPatrol.enabled = false;
-                mRun.enabled = false;
-                mChase.enabled = true;
-                attacking = false;
-                agent.speed = nmSpeed;
-                agent.acceleration = nmAcc;
+                ChaseFunction();
                 break;
             case State.attack:
-                mPatrol.enabled = false;
-                mRun.enabled = false;
-                mChase.enabled = false;
+                #region AttackPlayerReload
                 if (stunTimer >=0)
                 {
                     stunTimer -= Time.deltaTime;
                     break;
                 }
-                if (!attacking)
-                {
-                    agent.speed = nmSpeed;
-                    agent.acceleration = nmAcc;
-                    if (CheckRange())
-                    {
-                        if (attackTimer <= 0)
-                        {
-                            attacking = true;
-                            attackTimer = attackDelay;
-                            agent.speed = nmSpeed * 5;
-                            agent.acceleration = 100;
-                        }
-                        else
-                        {
-                            attackTimer -= Time.deltaTime;
-                        }
-                    }
-                }
-                else
-                {
-                    if (Vector3.Distance(transform.position, target.transform.position) <= 1.1f)
-                    {
-                        PlayerHealth.main.Damage();
-                        PlayerController.main.ApplyKnockback((target.transform.position-transform.position).normalized*knockback);
-                        agent.speed = 0;
-                        stunTimer = stunDuration;
-                        attacking = false;
-                    }
-                    else if (Vector3.Distance(transform.position, agent.path.corners[agent.path.corners.Length-1]) <= 0.1f || !agent.hasPath)
-                    {
-                        agent.speed = 0;
-                        stunTimer = stunDuration;
-                        attacking = false;
-                    }
-                }
+                AttackPlayer();
+                #endregion
                 break;
             case State.hide:
                 break;
             case State.attract:
-                mPatrol.enabled = false;
-                mRun.enabled = false;
-                mChase.enabled = true;
-                agent.speed = nmSpeed;
-                agent.acceleration = nmAcc;
+                AttractFunction();
                 break;
         }
     }
-    bool CheckRange()
-    {
-        if (target)
-        {
-            agent.SetDestination(target.transform.position);
-            if (agent.hasPath)
-            {
-                //draw debug
-                for (int i = 0; i < agent.path.corners.Length-1; i++)
-                {
-                    Debug.DrawLine(agent.path.corners[i], agent.path.corners[i + 1]);
-                }
-                if (agent.path.corners.Length == 2)
-                {
-                    return true;
-                }
-            }
-        }
-        return false;
-    }
-    void DetectForPlayer()
-    {
-        if (detectionZone.detectedObjs.Count > 0)
-        {
-            // Calculate direction to target object
-            target = detectionZone.detectedObjs[0].gameObject;
-        }
-        else
-        {
-            target = null;
-        }
-    }
 
-    void DetectOnProjectile()
-    { 
-        
+    #region StateChange
+    void PatrolFunction()
+    {
+        Patrol();
+        agent.speed = nmSpeed;
+        agent.acceleration = nmAcc;
     }
+    void RunFunction()
+    {
+        RunAway();
+        agent.speed = nmSpeed;
+        agent.acceleration = nmAcc;
+    }
+    void ChaseFunction()
+    {
+        Chase();
+        attacking = false;
+        agent.speed = nmSpeed;
+        agent.acceleration = nmAcc;
+    }
+    void AttractFunction()
+    {
+        Chase();
+        agent.speed = nmSpeed;
+        agent.acceleration = nmAcc;
+    }
+    #endregion
 
     void Action()
     {
@@ -203,6 +148,87 @@ public class MonsterController : MonoBehaviour
         if (expressionObj == null) { expressionObj = null; } 
         if (AttackPlayerRange() == true) { currentState = State.attack; } 
         if (OutofRangePlayer() == false) { currentState = State.patrol; exclaimationMark = false; }
+    }
+
+    #region Detect&Attack
+    void DetectForPlayer()
+    {
+        if (detectionZone.detectedObjs.Count > 0)
+        {
+            // Calculate direction to target object
+            target = detectionZone.detectedObjs[0].gameObject;
+        }
+        else
+        {
+            target = null;
+        }
+    }
+    void AttackPlayer()
+    {
+        if (!attacking)
+        {
+            agent.speed = nmSpeed;
+            agent.acceleration = nmAcc;
+            if (CheckRange())
+            {
+                if (attackTimer <= 0)
+                {
+                    attacking = true;
+                    attackTimer = attackDelay;
+                    agent.speed = nmSpeed * 5;
+                    agent.acceleration = 100;
+                }
+                else
+                {
+                    attackTimer -= Time.deltaTime;
+                }
+            }
+        }
+        else
+        {
+            if (Vector3.Distance(transform.position, target.transform.position) <= 1.1f)
+            {
+                PlayerHealth.main.Damage();
+                PlayerController.main.ApplyKnockback((target.transform.position - transform.position).normalized * knockback);
+                agent.speed = 0;
+                stunTimer = stunDuration;
+                attacking = false;
+            }
+            else if (Vector3.Distance(transform.position, agent.path.corners[agent.path.corners.Length - 1]) <= 0.1f || !agent.hasPath)
+            {
+                agent.speed = 0;
+                stunTimer = stunDuration;
+                attacking = false;
+            }
+        }
+    }
+    #endregion
+
+    #region CheckRangeBool
+    bool CheckRange()
+    {
+        if (target)
+        {
+            agent.SetDestination(target.transform.position);
+            if (agent.hasPath)
+            {
+                //draw debug
+                for (int i = 0; i < agent.path.corners.Length - 1; i++)
+                {
+                    Debug.DrawLine(agent.path.corners[i], agent.path.corners[i + 1]);
+                }
+                if (agent.path.corners.Length == 2)
+                {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    void DetectOnProjectile()
+    {
+
     }
 
     bool LookForPlayerSoundSight()
@@ -292,12 +318,85 @@ public class MonsterController : MonoBehaviour
 
         return false;
     }
-
-    #region
-
-
     #endregion
 
+    #region Patrol
+    PatrolList pList;
+    private int destPoint = 0;
+
+    void GotoNextPoint()
+    {
+        // Returns if no points have been set up
+        if (pList.points.Length == 0)
+            return;
+
+        // Set the agent to go to the currently selected destination.
+        agent.destination = pList.points[destPoint].position;
+
+        // Choose the next point in the array as the destination,
+        // cycling to the start if necessary.
+        destPoint = (destPoint + 1) % pList.points.Length;
+    }
+
+    void NearestPoint()
+    {
+        PatrolList[] pListArea = FindObjectsOfType<PatrolList>();
+
+        if (pListArea.Length > 0)
+        {
+            PatrolList closestPArea = pListArea[0];
+            foreach (PatrolList plistA in pListArea)
+            {
+                if (Vector3.Distance(plistA.transform.position, transform.position) < Vector3.Distance(closestPArea.transform.position, transform.position))
+                {
+                    closestPArea = plistA;
+                }
+            }
+            pList = closestPArea.gameObject.GetComponent<PatrolList>();
+        }
+    }
+
+    void Patrol()
+    {
+        if (!enabled) { pList = null; }
+
+        NearestPoint();
+
+        // Choose the next destination point when the agent gets
+        // close to the current one.
+        if (!agent.pathPending && agent.remainingDistance < 0.5f)
+        {
+            if (pList != null)
+            {
+                GotoNextPoint();
+            }
+        }
+    }
+    #endregion
+
+    #region RunAway
+    void RunAway()
+    {
+        if (target != null)
+        {
+            Vector3 dirToPlayer = transform.position - target.transform.position;
+            Vector3 newPos = transform.position + dirToPlayer;
+            agent.SetDestination(newPos);
+        }
+    }
+    #endregion
+
+    #region Chase
+    void Chase()
+    {
+        if (target != null)
+        {
+            agent.SetDestination(target.transform.position);
+        }
+    }
+    #endregion
+
+    #region Gizmos
 #if UNITY_EDITOR
     private void OnDrawGizmosSelected()
     {
@@ -343,4 +442,5 @@ public class MonsterController : MonoBehaviour
         }
     }
 #endif
+    #endregion
 }

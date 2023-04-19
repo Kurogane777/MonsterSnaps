@@ -6,9 +6,7 @@ using UnityEngine.Events;
 public class PauseController : MonoBehaviour
 {
     public UnityEvent GamePaused;
-
     public UnityEvent GameResumed;
-
     private bool _isPaused;
 
     void Update()
@@ -32,6 +30,7 @@ public class PauseController : MonoBehaviour
 
     public void ResumeR()
     {
-        Time.timeScale = 1;
+        if (_isPaused)
+        { Time.timeScale = 1; _isPaused = false; }
     }
 }
