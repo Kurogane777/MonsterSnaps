@@ -103,6 +103,8 @@ public class MonsterController : MonoBehaviour
                 AttractFunction();
                 break;
         }
+
+        if (currentState != State.patrol) { pList = null; pListArea = null; }
     }
 
     #region StateChange
@@ -321,7 +323,7 @@ public class MonsterController : MonoBehaviour
     #endregion
 
     #region Patrol
-    PatrolList pList;
+    public PatrolList pList;
     private int destPoint = 0;
 
     void GotoNextPoint()
@@ -338,9 +340,11 @@ public class MonsterController : MonoBehaviour
         destPoint = (destPoint + 1) % pList.points.Length;
     }
 
+    public PatrolList[] pListArea;
+
     void NearestPoint()
     {
-        PatrolList[] pListArea = FindObjectsOfType<PatrolList>();
+        pListArea = FindObjectsOfType<PatrolList>();
 
         if (pListArea.Length > 0)
         {
@@ -358,8 +362,6 @@ public class MonsterController : MonoBehaviour
 
     void Patrol()
     {
-        if (!enabled) { pList = null; }
-
         NearestPoint();
 
         // Choose the next destination point when the agent gets

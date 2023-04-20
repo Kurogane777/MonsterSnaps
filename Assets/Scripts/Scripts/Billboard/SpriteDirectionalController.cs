@@ -26,21 +26,23 @@ public class SpriteDirectionalController : MonoBehaviour
             // Back Animation 
             animationDirection = new Vector2(0f, -1f);
         }
-        if (angle < sideAngle)
+        else if (angle < sideAngle)
         {
-            //// Side Animation, in this case, this is the Right Animation
-            //animationDirection = new Vector2(1f, 0f);
+            // Side Animation, in this case, this is the Right Animation
+            animationDirection = new Vector2(1f, 0f);
 
-            //// This changes the side animation based on what side
-            //// The camera is viewing the slim from
-            //if (signedAngle < 0)
-            //{
-            //    spriteRenderer.flipX = true;
-            //}
-            //else
-            //{
-            //    spriteRenderer.flipX = false;
-            //}
+            // This changes the side animation based on what side
+            // The camera is viewing the slim from
+            if (signedAngle < 0)
+            {
+                //spriteRenderer.flipX = true;
+                spriteRenderer.flipX = false;
+            }
+            else
+            {
+                //spriteRenderer.flipX = false;
+                spriteRenderer.flipX = true;
+            }
 
             // Use this if you have 2 different animations
             // for the left and right side of the sprite
