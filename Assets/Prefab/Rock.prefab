@@ -12,8 +12,11 @@ GameObject:
   - component: {fileID: 1449919599719812128}
   - component: {fileID: 5307766217185122580}
   - component: {fileID: 6620519392950256671}
+  - component: {fileID: 5057511155925024323}
   - component: {fileID: 1985538825401212054}
   - component: {fileID: -9186656814902345108}
+  - component: {fileID: 6855595334407743781}
+  - component: {fileID: 5990469135218294364}
   m_Layer: 8
   m_Name: Rock
   m_TagString: Untagged
@@ -99,6 +102,19 @@ SphereCollider:
   m_Enabled: 1
   serializedVersion: 2
   m_Radius: 0.5
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!135 &5057511155925024323
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8578972288085489722}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.65
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!54 &1985538825401212054
 Rigidbody:
@@ -224,6 +240,75 @@ TrailRenderer:
   m_MinVertexDistance: 0.1
   m_Autodestruct: 0
   m_Emitting: 1
+--- !u!114 &6855595334407743781
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8578972288085489722}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8d5c88cda0fc7a84a97d3236d2d0582c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  tagHit: A
+  applyHitEvent:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 6855595334407743781}
+        m_TargetAssemblyTypeName: ProjectileEffects, Assembly-CSharp
+        m_MethodName: DestroyTRenderer
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 6855595334407743781}
+        m_TargetAssemblyTypeName: ProjectileEffects, Assembly-CSharp
+        m_MethodName: DestroyRigid
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 3830627311717964718}
+        m_TargetAssemblyTypeName: UnityEngine.Collider, UnityEngine
+        m_MethodName: set_enabled
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
+  hitOnce: 0
+--- !u!114 &5990469135218294364
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8578972288085489722}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4a72cbb55b1032a488b8d092a412348a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  targetTime: 60
+  timerEnd:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &8968431821654561710
 GameObject:
   m_ObjectHideFlags: 0
@@ -265,7 +350,7 @@ SphereCollider:
   m_GameObject: {fileID: 8968431821654561710}
   m_Material: {fileID: 0}
   m_IsTrigger: 1
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 2
   m_Radius: 6.43
   m_Center: {x: 0, y: 0, z: 0}

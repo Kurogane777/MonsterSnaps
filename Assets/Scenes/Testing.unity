@@ -8121,7 +8121,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6cbe999eac6f80d4a8f7971e50e57e9f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _SA: 1
+  _SA: 0.1
 --- !u!1 &975504455
 GameObject:
   m_ObjectHideFlags: 0
@@ -8849,7 +8849,6 @@ GameObject:
   - component: {fileID: 1197406832}
   - component: {fileID: 1197406842}
   - component: {fileID: 1197406839}
-  - component: {fileID: 1197406837}
   m_Layer: 4
   m_Name: Player
   m_TagString: Player
@@ -8962,26 +8961,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
---- !u!95 &1197406837
-Animator:
-  serializedVersion: 4
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1197406830}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 5c68ef4a8e8a6da46b98e36e93777d63, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_StabilizeFeet: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!114 &1197406839
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10374,7 +10353,7 @@ GameObject:
   - component: {fileID: 1814393104}
   m_Layer: 0
   m_Name: Cube
-  m_TagString: Untagged
+  m_TagString: A
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
