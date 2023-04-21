@@ -14,6 +14,7 @@ public class MonsterController : MonoBehaviour
     [SerializeField] private GameObject lPlyerParticles;
     GameObject expressionObj;
     bool exclaimationMark;
+    bool questionMark;
 
     [Header("Attack")]
     public NavMeshAgent agent;
@@ -28,9 +29,12 @@ public class MonsterController : MonoBehaviour
     public float detectionRadiusV = 10.0f; // V = view
     public float detectionRadiusS = 10.0f; // S = sound
     public float detectionAngle = 90.0f;
+    [Range(0, 100)] public float detectionRangeHiddenV;
+    [Range(0, 100)] public float detectionRangeHiddenS;
     [SerializeField] Color detectVColor = new Color(0.8f, 0f, 0f, 0.4f);
     [SerializeField] Color detectSColor = new Color(0f, 0f, 0f, 0.4f);
     [SerializeField] bool detectionGizmo;
+    [SerializeField] bool hiddenRangeGizmo;
 
     [Header("<Player Range>")]
     [SerializeField] private Color plyRadiusColor = new Color(0f, 50f, 90f, 0.3f);
@@ -165,6 +169,23 @@ public class MonsterController : MonoBehaviour
             target = null;
         }
     }
+
+    void DetectOnProjectile()
+    {
+        if (!target)
+        {
+            if (LookForPlayerSoundSight() == true) // ExclaimationMark
+            {
+                if (questionMark == false)
+                {
+                    expressionObj = Instantiate(dPlyerParticles, expressionSlot.transform.position, Quaternion.identity);
+                    expressionObj.transform.SetParent(expressionSlot.transform);
+                    questionMark = true;
+                }
+            }
+        }
+    }
+
     void AttackPlayer()
     {
         if (!attacking)
@@ -226,11 +247,6 @@ public class MonsterController : MonoBehaviour
             }
         }
         return false;
-    }
-
-    void DetectOnProjectile()
-    {
-
     }
 
     bool LookForPlayerSoundSight()
@@ -430,6 +446,28 @@ public class MonsterController : MonoBehaviour
             Vector3 rotatedBack = Quaternion.Euler(0, -(360 - detectionAngle) * 0.5f, 0) * -transform.forward;
 
             UnityEditor.Handles.DrawSolidArc(transform.position, Vector3.up, rotatedBack, 360 - detectionAngle, detectionRadiusS);
+        }
+
+        if (detectionGizmo)
+        {
+            if (hiddenRangeGizmo)
+            {
+                // Detect Sound and Sight Radius
+                Color a = new Color(1f, 1f, 1f, 0.05f);
+                UnityEditor.Handles.color = a;
+
+                Vector3 rotatedForward = Quaternion.Euler(0, -detectionAngle * 0.5f, 0) * transform.forward;
+
+                UnityEditor.Handles.DrawSolidArc(transform.position, Vector3.up, rotatedForward, detectionAngle, detectionRadiusV * (detectionRangeHiddenV / 100));
+
+                // Detect Sound Radius
+                Color b = new Color(1f, 1f, 1f, 0.05f);
+                UnityEditor.Handles.color = b;
+
+                Vector3 rotatedBack = Quaternion.Euler(0, -(360 - detectionAngle) * 0.5f, 0) * -transform.forward;
+
+                UnityEditor.Handles.DrawSolidArc(transform.position, Vector3.up, rotatedBack, 360 - detectionAngle, detectionRadiusS * (detectionRangeHiddenS / 100));
+            }
         }
 
         if (attackGizmo)

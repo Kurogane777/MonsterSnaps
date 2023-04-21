@@ -5,6 +5,9 @@ using UnityEngine.Events;
 
 public class ProjectileEffects : MonoBehaviour
 {
+    [TagSelector]
+    public string[] hitTag = new string[] { };
+
     public string tagHit;
     public UnityEvent applyHitEvent;
     public bool hitOnce;
@@ -13,7 +16,16 @@ public class ProjectileEffects : MonoBehaviour
     {
         //Debug.Log("KKK");
 
-        if (collider.gameObject.tag == tagHit)
+        foreach (string tList in hitTag)
+        {
+            if (collider.gameObject.tag == tList)
+            {
+                //Do Something
+            }
+        }
+
+
+                if (collider.gameObject.tag == tagHit)
         {
             if (!hitOnce)
             {

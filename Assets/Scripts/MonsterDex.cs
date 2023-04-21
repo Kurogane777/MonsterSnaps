@@ -1,12 +1,14 @@
 using System.Linq;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.Events;
 
 [System.Serializable]
 public class MonsterIndex
 {
-    public string monsterName;
+    [HideInInspector] public GameObject uiBoxDex;
+    public string mName;
     public bool capture;
 }
 
@@ -14,6 +16,8 @@ public class MonsterDex : MonoBehaviour
 {
     public Sprite captureIcon;
     public Sprite unknownIcon;
+    public GameObject mDex;
+    public GameObject uiPrefabBox;
 
     public List<MonsterIndex> monsterDex;
     public bool allCapture;
@@ -26,6 +30,8 @@ public class MonsterDex : MonoBehaviour
     }
     private void Update()
     {
+        UIDex();
+
         foreach (var index in monsterDex) { if (index.capture == true) { allCapture = true; } else { allCapture = false; } }
         if (allCapture == true) { allCaptureEvent.Invoke(); }
     }
@@ -46,12 +52,38 @@ public class MonsterDex : MonoBehaviour
         ind = 0;
         try
         {
-            ind = monsterDex.FindIndex(n => n.monsterName == inp);
+            ind = monsterDex.FindIndex(n => n.mName == inp);
         }
         catch (System.Exception)
         {
             return false;
         }
         return true;
+    }
+
+    public int currentInt = 0;
+
+    void UIDex()
+    {
+        for (int i = 0; i < monsterDex.Count; i++)
+        {
+            if (currentInt < monsterDex.Count)
+            {
+                monsterDex[i].uiBoxDex = Instantiate(uiPrefabBox, transform.position, Quaternion.identity, mDex.transform);
+                currentInt++;
+            }
+
+            monsterDex[i].uiBoxDex.transform.GetChild(0).GetChild(0).GetComponent<Text>().text = i.ToString("000");
+            monsterDex[i].uiBoxDex.transform.GetChild(0).GetChild(1).GetComponent<Text>().text = monsterDex[i].mName;
+
+            if (monsterDex[i].capture == true)
+            {
+                monsterDex[i].uiBoxDex.transform.GetChild(0).GetChild(2).GetComponent<Image>().sprite = captureIcon;
+            }
+            else
+            {
+                monsterDex[i].uiBoxDex.transform.GetChild(0).GetChild(2).GetComponent<Image>().sprite = unknownIcon;
+            }
+        }
     }
 }

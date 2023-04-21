@@ -18,7 +18,7 @@ GameObject:
   - component: {fileID: 6855595334407743781}
   - component: {fileID: 5990469135218294364}
   m_Layer: 8
-  m_Name: Rock
+  m_Name: Projectile
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -252,6 +252,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8d5c88cda0fc7a84a97d3236d2d0582c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  TagFilterArray:
+  - A
   tagHit: A
   applyHitEvent:
     m_PersistentCalls:

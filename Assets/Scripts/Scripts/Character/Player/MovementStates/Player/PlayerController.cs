@@ -71,6 +71,7 @@ public class PlayerController : MonoBehaviour
 
         KnockbackFunction();
         ReloadDash();
+        FootStepsFunction();
     }
 
     #region Damged&Knockback
@@ -323,4 +324,27 @@ public class PlayerController : MonoBehaviour
         }
     }
     #endregion
+
+    [Header("Footsteps")]
+    public GameObject footsteps;
+    public bool isGrounded;
+    public int oneStep;
+    void FootStepsFunction()
+    {
+        float MvX = Input.GetAxis("Horizontal");
+        float MvY = Input.GetAxis("Vertical");
+        Vector3 Mv = new Vector3(MvX, 0, MvY);
+
+        isGrounded = Physics.Raycast(transform.position, Vector3.down, 1.15f);
+        Debug.DrawRay(transform.position, Vector3.down * 1.15f, Color.red);
+
+        if (Mv != Vector3.zero)
+        {
+            footsteps.SetActive(isGrounded);
+        }
+        else
+        {
+            footsteps.SetActive(false);
+        }
+    }
 }

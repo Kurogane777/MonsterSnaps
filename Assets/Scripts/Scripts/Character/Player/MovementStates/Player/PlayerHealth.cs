@@ -5,7 +5,6 @@ using UnityEngine.Events;
 
 public class PlayerHealth : MonoBehaviour
 {
-    public GameObject ui;
     public List<GameObject> heartsUI;
     public int numberHearts;
 
