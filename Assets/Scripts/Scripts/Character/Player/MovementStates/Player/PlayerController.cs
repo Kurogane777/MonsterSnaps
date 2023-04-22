@@ -325,10 +325,18 @@ public class PlayerController : MonoBehaviour
     }
     #endregion
 
+    #region Footsteps
     [Header("Footsteps")]
     public GameObject footsteps;
+    public GameObject nWFootsteps;
+    public GameObject waterRipple;
     public bool isGrounded;
-    public int oneStep;
+
+    public enum AreaFootSteps
+    { puddle, ground, none }
+
+    public AreaFootSteps steps;
+
     void FootStepsFunction()
     {
         float MvX = Input.GetAxis("Horizontal");
@@ -338,13 +346,32 @@ public class PlayerController : MonoBehaviour
         isGrounded = Physics.Raycast(transform.position, Vector3.down, 1.15f);
         Debug.DrawRay(transform.position, Vector3.down * 1.15f, Color.red);
 
-        if (Mv != Vector3.zero)
+        if (steps == AreaFootSteps.puddle)
         {
-            footsteps.SetActive(isGrounded);
+            waterRipple.SetActive(isGrounded);
         }
-        else
+        if (steps != AreaFootSteps.puddle)
+        {
+            waterRipple.SetActive(false);
+        }
+        if (steps == AreaFootSteps.ground)
+        {
+            if (Mv != Vector3.zero)
+            {
+                footsteps.SetActive(isGrounded);
+                nWFootsteps.SetActive(false);
+            }
+            else
+            {
+                footsteps.SetActive(false);
+                nWFootsteps.SetActive(true);
+            }
+        }
+        if (steps != AreaFootSteps.ground)
         {
             footsteps.SetActive(false);
+            nWFootsteps.SetActive(false);
         }
     }
+    #endregion
 }
