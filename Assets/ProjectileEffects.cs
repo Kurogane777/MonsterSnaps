@@ -25,7 +25,7 @@ public class ProjectileEffects : MonoBehaviour
         }
 
 
-                if (collider.gameObject.tag == tagHit)
+        if (collider.gameObject.tag == tagHit)
         {
             if (!hitOnce)
             {

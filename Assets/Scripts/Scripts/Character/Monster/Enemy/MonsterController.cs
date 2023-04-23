@@ -6,7 +6,8 @@ using UnityEngine.AI;
 public class MonsterController : MonoBehaviour
 {
     [Header("Detect and Lost Player")]
-    [SerializeField] DetectionZone detectionZone;
+    [SerializeField] DetectionZone plyDetectionZone;
+    [SerializeField] DetectionZone prjDetectionZone;
     [HideInInspector] public GameObject target;
     [Space]
     [SerializeField] private GameObject expressionSlot;
@@ -159,10 +160,10 @@ public class MonsterController : MonoBehaviour
     #region Detect&Attack
     void DetectForPlayer()
     {
-        if (detectionZone.detectedObjs.Count > 0)
+        if (plyDetectionZone.detectedObjs.Count > 0)
         {
             // Calculate direction to target object
-            target = detectionZone.detectedObjs[0].gameObject;
+            target = plyDetectionZone.detectedObjs[0].gameObject;
         }
         else
         {
@@ -172,17 +173,14 @@ public class MonsterController : MonoBehaviour
 
     void DetectOnProjectile()
     {
-        if (!target)
+        if (prjDetectionZone.detectedObjs.Count > 0)
         {
-            if (LookForPlayerSoundSight() == true) // ExclaimationMark
-            {
-                if (questionMark == false)
-                {
-                    expressionObj = Instantiate(dPlyerParticles, expressionSlot.transform.position, Quaternion.identity);
-                    expressionObj.transform.SetParent(expressionSlot.transform);
-                    questionMark = true;
-                }
-            }
+            // Calculate direction to target object
+            target = prjDetectionZone.detectedObjs[0].gameObject;
+        }
+        else
+        {
+            target = null;
         }
     }
 

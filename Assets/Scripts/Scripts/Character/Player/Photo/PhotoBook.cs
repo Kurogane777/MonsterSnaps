@@ -62,6 +62,16 @@ public class PhotoBook : MonoBehaviour
         if (open)
             Populate();
     }
+
+    public void PreviousPage()
+    {
+        if (allPictures != null && allPictures.Count > 0)
+        {
+            page = (page - 1) % pageSize * 2;//*2 because we have 2 pages right now
+            Populate();
+        }
+    }
+
     public void NextPage()
     {
         if (allPictures!=null && allPictures.Count > 0)

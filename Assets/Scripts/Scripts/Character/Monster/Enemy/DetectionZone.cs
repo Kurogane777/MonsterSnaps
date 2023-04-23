@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class DetectionZone : MonoBehaviour
 {
-    public string tagTarget = "Player";
+    [TagSelector]
+    public string tagTarget = "";
 
     public List<Collider> detectedObjs = new List<Collider>();
     public Collider col;
