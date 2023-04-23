@@ -12,26 +12,40 @@ public class PauseController : MonoBehaviour
 
     void Update()
     {
+        Toggle();
+    }
+
+    public void Toggle()
+    {
         if (Input.GetKeyDown(inputC.pause))
         {
-            _isPaused = !_isPaused;
+            //_isPaused = !_isPaused;
 
-            if (_isPaused)
-            {
-                Time.timeScale = 0;
-                GamePaused.Invoke();
-            }
-            else
-            {
-                Time.timeScale = 1;
-                GameResumed.Invoke();
-            }
+            //if (_isPaused)
+            //{
+            //    Time.timeScale = 0;
+            //    GamePaused.Invoke();
+            //}
+            //else
+            //{
+            //    Time.timeScale = 1;
+            //    GameResumed.Invoke();
+            //}
+
+            //PauseR();
+            //ResumeR();
+
+            PauseR();
         }
+    }
+
+    public void PauseR()
+    {
+        Time.timeScale = 0; _isPaused = false; GamePaused.Invoke();
     }
 
     public void ResumeR()
     {
-        if (_isPaused)
-        { Time.timeScale = 1; _isPaused = false; }
+        Time.timeScale = 1; _isPaused = true; GameResumed.Invoke();
     }
 }

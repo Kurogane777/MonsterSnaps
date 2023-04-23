@@ -26,11 +26,6 @@ public class pStates : MonoBehaviour
         {
             defaultStates.Invoke();
 
-            if (Input.GetKeyDown(KeyCode.Escape))
-            {
-                PhotoBook.main.Toggle();
-            }
-
             if (!boolCallOnceDefaltS)
             {
                 callOnceDefaltS.Invoke();
@@ -61,7 +56,6 @@ public class pStates : MonoBehaviour
 
     void NonDefaultState()
     {
-        PhotoBook.main.Close();
         nonDefaultStates.Invoke();
         boolCallOnceDefaltS = false;
     }
