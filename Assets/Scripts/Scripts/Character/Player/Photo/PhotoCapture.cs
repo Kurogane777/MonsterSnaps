@@ -151,8 +151,6 @@ public class PhotoCapture : MonoBehaviour
         return v;
     }
 
-
-
     void ShowPhoto()
     {
         Sprite photoSprite = Sprite.Create(screenCapture, new Rect(0.0f, 0.0f, screenCapture.width, screenCapture.height), new Vector2(0.5f, 0.5f), 100.0f);
@@ -176,5 +174,23 @@ public class PhotoCapture : MonoBehaviour
         viewingPhoto = false;
         photoFrame.SetActive(false);
         cameraUI.SetActive(true);
+    }
+
+    Texture2D CaptureCameraView()
+    {
+        RenderTexture renderTexture = new RenderTexture(Screen.width, Screen.height, 24);
+        Camera.main.targetTexture = renderTexture;
+        Camera.main.Render();
+
+        Texture2D texture = new Texture2D(renderTexture.width, renderTexture.height, TextureFormat.RGB24, false);
+        RenderTexture.active = renderTexture;
+        texture.ReadPixels(new Rect(0, 0, renderTexture.width, renderTexture.height), 0, 0);
+        texture.Apply();
+
+        Camera.main.targetTexture = null;
+        RenderTexture.active = null;
+        Object.Destroy(renderTexture);
+
+        return texture;
     }
 }

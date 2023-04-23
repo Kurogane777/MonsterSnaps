@@ -9,6 +9,7 @@ public class MonsterIndex
 {
     [HideInInspector] public GameObject uiBoxDex;
     public string mName;
+    public Sprite mSprite;
     public bool capture;
 }
 
