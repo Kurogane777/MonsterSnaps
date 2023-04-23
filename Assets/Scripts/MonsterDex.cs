@@ -30,12 +30,17 @@ public class MonsterDex : MonoBehaviour
     public UnityEvent allCaptureEvent;
     public static MonsterDex main;
 
+    public GameObject backUI;
+
+    public bool OnOff;
+
     public void Awake()
     {
         main = this;
     }
     private void Update()
     {
+        if (OnOff) { InputPressMonsterDex(); }
         UIDex();
         UISelect();
 
@@ -99,41 +104,116 @@ public class MonsterDex : MonoBehaviour
 
     void UISelect()
     {
-        if (Input.GetKeyDown(KeyCode.UpArrow) && currentSlelectedInt > 0)
+        if (!backUIBool)
         {
-            currentSlelectedInt--;
+            MSelect = monsterDex[currentSlelectedInt].uiBoxDex;
+
+            MSelect.transform.GetChild(0).GetChild(0).GetComponent<Text>().color = Color.red;
+            MSelect.transform.GetChild(0).GetChild(1).GetComponent<Text>().color = Color.red;
+            monsterUIImage.sprite = monsterDex[currentSlelectedInt].mSprite;
+
+            foreach (var mListName in monsterName)
+            {
+                mListName.text = monsterDex[currentSlelectedInt].mName;
+            }
+
+            foreach (var mListDesc in monsterDesc)
+            {
+                mListDesc.text = monsterDex[currentSlelectedInt].mDesc;
+            }
+
+            foreach (var ui in monsterDex)
+            {
+                if (ui.uiBoxDex != MSelect)
+                {
+                    ui.uiBoxDex.transform.GetChild(0).GetChild(0).GetComponent<Text>().color =
+                    uiPrefabBox.transform.GetChild(0).GetChild(0).GetComponent<Text>().color;
+
+                    ui.uiBoxDex.transform.GetChild(0).GetChild(1).GetComponent<Text>().color =
+                    uiPrefabBox.transform.GetChild(0).GetChild(1).GetComponent<Text>().color;
+                }
+            }
         }
-        else if (Input.GetKeyDown(KeyCode.DownArrow) && currentSlelectedInt < monsterDex.Count - 1)
+        else
         {
-            currentSlelectedInt++;
-        }
-
-        MSelect = monsterDex[currentSlelectedInt].uiBoxDex;
-
-        MSelect.transform.GetChild(0).GetChild(0).GetComponent<Text>().color = Color.red;
-        MSelect.transform.GetChild(0).GetChild(1).GetComponent<Text>().color = Color.red;
-        monsterUIImage.sprite = monsterDex[currentSlelectedInt].mSprite;
-
-        foreach (var mListName in monsterName)
-        {
-            mListName.text = monsterDex[currentSlelectedInt].mName;
-        }
-
-        foreach (var mListDesc in monsterDesc)
-        {
-            mListDesc.text = monsterDex[currentSlelectedInt].mDesc;
-        }
-
-        foreach (var ui in monsterDex)
-        {
-            if (ui.uiBoxDex != MSelect)
+            foreach (var ui in monsterDex)
             {
                 ui.uiBoxDex.transform.GetChild(0).GetChild(0).GetComponent<Text>().color =
                 uiPrefabBox.transform.GetChild(0).GetChild(0).GetComponent<Text>().color;
 
-                ui.uiBoxDex.transform.GetChild(0).GetChild(1).GetComponent<Text>().color = 
+                ui.uiBoxDex.transform.GetChild(0).GetChild(1).GetComponent<Text>().color =
                 uiPrefabBox.transform.GetChild(0).GetChild(1).GetComponent<Text>().color;
             }
         }
+    }
+
+    int extracurrentInt;
+    bool backUIBool;
+    public UnityEvent returnBack;
+
+    public void InputPressMonsterDex()
+    {
+        if (extracurrentInt <= currentSlelectedInt)
+        {
+            extracurrentInt = currentSlelectedInt;
+        }
+
+        if (!backUIBool)
+        {
+
+            backUI.transform.GetChild(1).GetComponent<Text>().color =
+            uiPrefabBox.transform.GetChild(0).GetChild(1).GetComponent<Text>().color;
+
+            if (Input.GetKeyDown(KeyCode.UpArrow) && currentSlelectedInt > 0)
+            {
+                currentSlelectedInt--;
+            }
+            else if (Input.GetKeyDown(KeyCode.DownArrow) && currentSlelectedInt < monsterDex.Count - 1)
+            {
+                currentSlelectedInt++;
+            }
+            else if (Input.GetKeyDown(KeyCode.DownArrow) && extracurrentInt == monsterDex.Count - 1)
+            {
+                backUI.transform.GetChild(1).GetComponent<Text>().color = Color.red;
+                extracurrentInt++;
+                backUIBool = true;
+            }
+        }
+        else
+        {
+            if (currentSlelectedInt < monsterDex.Count - 1)
+            {
+                backUIBool = false;
+            }
+            if (Input.GetKeyDown(KeyCode.UpArrow) && currentSlelectedInt == monsterDex.Count - 1)
+            {
+                extracurrentInt--;
+                backUIBool = false;
+            }
+
+            if (Input.GetKeyUp(KeyCode.Space))
+            {
+                ResetCurrentDex();
+                TurnOffDex();
+
+                returnBack.Invoke();
+            }
+        }
+    }
+
+    void ResetCurrentDex()
+    {
+        currentSlelectedInt = 0;
+        extracurrentInt = 0;
+    }
+
+    void TurnOffDex()
+    {
+        OnOff = false;
+    }
+
+    public void TurnOnDex()
+    {
+        OnOff = true;
     }
 }

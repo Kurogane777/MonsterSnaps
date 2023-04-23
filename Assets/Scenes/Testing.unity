@@ -3491,7 +3491,6 @@ GameObject:
   m_Component:
   - component: {fileID: 495938125}
   - component: {fileID: 495938126}
-  - component: {fileID: 495938127}
   m_Layer: 5
   m_Name: MIndex
   m_TagString: Untagged
@@ -3543,30 +3542,6 @@ MonoBehaviour:
   m_Spacing: {x: 0, y: 0}
   m_Constraint: 0
   m_ConstraintCount: 2
---- !u!114 &495938127
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 495938124}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b57f2a5b18bdcae48bc9d6164b043181, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _listUI:
-  - {fileID: 263416119}
-  - {fileID: 135482193}
-  - {fileID: 2039513856}
-  _selectedUI: {fileID: 0}
-  _selectedColor: {r: 1, g: 0, b: 0, a: 0}
-  _selectedColorPressed: {r: 0.4811321, g: 0.4811321, b: 0.4811321, a: 0}
-  _selectedScale: {x: 1.5, y: 1.5, z: 1.5}
-  _selectedSpeed: 1
-  resetCurrentIndex: 0
-  loopCurrentIndex: 0
-  updateButtonDelay: 1
 --- !u!1 &501801555
 GameObject:
   m_ObjectHideFlags: 0

@@ -16,22 +16,22 @@ public class Menu : MonoBehaviour
     [SerializeField] bool resetCurrentIndex;
     [SerializeField] bool loopCurrentIndex;
 
-    [SerializeField] float updateButtonDelay = 1f;
+    //[SerializeField] float updateButtonDelay = 1f;
 
     int _currentNumber;
     Color _defaultColor;
     Vector3 _defaultScale;
     MenuInvokeSelected _menuInvokeSelect;
-    bool updateButtonOnce = true;
-    float updateButtonCurrent;
-    bool callOnce = true;
+    //bool updateButtonOnce = true;
+    //float updateButtonCurrent;
+    //bool callOnce = true;
 
     void Awake()
     {
         _defaultColor = _listUI[0].transform.GetChild(0).GetComponent<Text>().color;
         _defaultScale = _listUI[0].transform.GetChild(0).localScale;
 
-        updateButtonCurrent = updateButtonDelay;
+        //updateButtonCurrent = updateButtonDelay;
     }
 
     // Update is called once per frame
@@ -55,9 +55,10 @@ public class Menu : MonoBehaviour
             }
         }
 
-        if (((Input.GetAxis("Vertical") < -0.1f) ? true : false) && updateButtonOnce == true)
+        //if (((Input.GetAxis("Vertical") < -0.1f) ? true : false) && updateButtonOnce == true)
+        if (Input.GetKeyDown(KeyCode.DownArrow))
         {
-            updateButtonOnce = false;
+            //updateButtonOnce = false;
 
             if (loopCurrentIndex)
             {
@@ -75,9 +76,10 @@ public class Menu : MonoBehaviour
                 _currentNumber++;
             }
         }
-        else if (((Input.GetAxis("Vertical") > 0.1f) ? true : false) && updateButtonOnce == true)
+        //else if (((Input.GetAxis("Vertical") > 0.1f) ? true : false) && updateButtonOnce == true)
+        else if (Input.GetKeyDown(KeyCode.UpArrow))
         {
-            updateButtonOnce = false;
+            //updateButtonOnce = false;
 
             if (loopCurrentIndex)
             {
@@ -100,7 +102,8 @@ public class Menu : MonoBehaviour
         {
             _selectedUI.transform.GetChild(0).transform.localScale = Vector3.Lerp(_selectedUI.transform.GetChild(0).transform.localScale, _selectedScale, Time.fixedDeltaTime * _selectedSpeed);
 
-            if (Input.GetKey("space") || Input.GetKey(KeyCode.JoystickButton0))
+            //if (Input.GetKey("space") || Input.GetKey(KeyCode.JoystickButton0))
+            if (Input.GetKey("space"))
             {
                 _selectedUI.transform.GetChild(0).GetComponent<Text>().color = _selectedColorPressed;
             }
@@ -109,7 +112,8 @@ public class Menu : MonoBehaviour
                 _selectedUI.transform.GetChild(0).GetComponent<Text>().color = _selectedColor;
             }
 
-            if (Input.GetKeyUp("space") || Input.GetKeyUp(KeyCode.JoystickButton0))
+            //if (Input.GetKeyUp("space") || Input.GetKeyUp(KeyCode.JoystickButton0))
+            if (Input.GetKeyUp("space"))
             {
 
                 _menuInvokeSelect = _selectedUI.transform.gameObject.GetComponent<MenuInvokeSelected>();
@@ -120,7 +124,7 @@ public class Menu : MonoBehaviour
 
         ResetCurrentNumber();
         DisbleUI();
-        UpdateButtonOnce();
+        //UpdateButtonOnce();
     }
 
     void ResetCurrentNumber()
@@ -150,28 +154,28 @@ public class Menu : MonoBehaviour
         }
     }
 
-    void UpdateButtonOnce()
-    {
-        if (updateButtonOnce == false)
-        {
-            updateButtonCurrent -= Time.deltaTime;
+    //void UpdateButtonOnce()
+    //{
+    //    if (updateButtonOnce == false)
+    //    {
+    //        updateButtonCurrent -= Time.deltaTime;
 
-            if (updateButtonCurrent <= 0)
-            {
-                updateButtonCurrent = 0;
-                updateButtonOnce = true;
-            }
+    //        if (updateButtonCurrent <= 0)
+    //        {
+    //            updateButtonCurrent = 0;
+    //            updateButtonOnce = true;
+    //        }
 
-            if (updateButtonCurrent == 0)
-            {
-                if (callOnce)
-                {
-                    callOnce = false;
+    //        if (updateButtonCurrent == 0)
+    //        {
+    //            if (callOnce)
+    //            {
+    //                callOnce = false;
 
-                    updateButtonCurrent = updateButtonDelay;
-                    callOnce = true;
-                }
-            }
-        }
-    }
+    //                updateButtonCurrent = updateButtonDelay;
+    //                callOnce = true;
+    //            }
+    //        }
+    //    }
+    //}
 }
