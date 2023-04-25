@@ -1016,7 +1016,7 @@ GameObject:
   - component: {fileID: 5583696003203955421}
   - component: {fileID: 8042907851249604528}
   m_Layer: 0
-  m_Name: Tree Prefab
+  m_Name: Tree
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
