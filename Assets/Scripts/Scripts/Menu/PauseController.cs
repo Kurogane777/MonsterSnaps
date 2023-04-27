@@ -32,9 +32,6 @@ public class PauseController : MonoBehaviour
             //    GameResumed.Invoke();
             //}
 
-            //PauseR();
-            //ResumeR();
-
             PauseR();
         }
     }

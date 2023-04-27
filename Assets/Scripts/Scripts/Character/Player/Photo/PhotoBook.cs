@@ -16,6 +16,7 @@ public class PhotoBook : MonoBehaviour
     public int page = 0;//the page we are on
     public int pageSize;//how many items fit on a single page
     bool open;
+    public Text pageNumber;
     public static PhotoBook main;
     private void Awake()
     {
@@ -27,16 +28,20 @@ public class PhotoBook : MonoBehaviour
         page2.gameObject.SetActive(open);
         //Populate();//call this every time you change page
     }
-    public void InputPressInventory()
+    public void Update()
     {
-        if (Input.GetKeyDown(inputC.prvInvBook))
+        int maxPages = (allPictures.Count / (pageSize * 2)) * 2;
+        if (Input.GetKeyDown(KeyCode.Alpha1))
         {
-            page--;
+            page = Mathf.Max(0, page-2);
+            Populate();
         }
-        if (Input.GetKeyDown(inputC.nxtInvBook))
+        if (Input.GetKeyDown(KeyCode.Alpha2))
         {
-            page++;
+            page = Mathf.Min((allPictures.Count / (pageSize * 2)) * 2, page + 2);
+            Populate();
         }
+        pageNumber.text = $"{page / 2}/{maxPages/2}";
     }
     public void Open()
     {

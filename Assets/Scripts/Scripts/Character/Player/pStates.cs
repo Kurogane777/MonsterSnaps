@@ -14,6 +14,7 @@ public class pStates : MonoBehaviour
     public UnityEvent croutchStates;
     public UnityEvent photoStates;
     public UnityEvent projectileStates;
+    public UnityEvent noneStates;
 
     public UnityEvent nonDefaultStates;
 
@@ -52,11 +53,25 @@ public class pStates : MonoBehaviour
             projectileStates.Invoke();
             NonDefaultState();
         }
+        else if (pState.currentState == PlayerController.State.none)
+        {
+            noneStates.Invoke();
+        }
     }
 
     void NonDefaultState()
     {
         nonDefaultStates.Invoke();
         boolCallOnceDefaltS = false;
+    }
+
+    public void toMenu()
+    {
+        pState.currentState = PlayerController.State.none;
+    }
+
+    public void returnDefault()
+    {
+        pState.currentState = PlayerController.State.movement;
     }
 }

@@ -25,6 +25,8 @@ public class PhotoCapture : MonoBehaviour
     private Texture2D screenCapture;
     private bool viewingPhoto;
 
+    public Camera playerCam;
+
     private void Start()
     {
         screenCapture = new Texture2D(Screen.width, Screen.height, TextureFormat.RGB24, false);
@@ -52,18 +54,20 @@ public class PhotoCapture : MonoBehaviour
 
         yield return new WaitForEndOfFrame();
 
-        Rect regionToRead = new Rect(0, 0, Screen.width, Screen.height);
+        //Rect regionToRead = new Rect(0, 0, Screen.width, Screen.height);
 
-        screenCapture.ReadPixels(regionToRead, 0, 0, false);
-        screenCapture.Apply();
+        //screenCapture.ReadPixels(regionToRead, 0, 0, false);
+        //screenCapture.Apply();
         //make a new tex2D to stop duplication
-        var newTex = new Texture2D(screenCapture.width, screenCapture.height);
-        newTex.SetPixels(screenCapture.GetPixels());
-        newTex.Apply();//remember to apply the changes when you update a texture
+        //var newTex = new Texture2D(screenCapture.width, screenCapture.height);
+        //newTex.SetPixels(screenCapture.GetPixels());
+        //newTex.Apply();//remember to apply the changes when you update a texture
+        var newTex = CaptureCameraView(playerCam);
+        
         var caps = GetTargets(Camera.main);
         PhotoBook.main.allPictures.Add(new Picture(newTex,caps));
         MonsterDex.main.Captured(caps);
-        ShowPhoto();
+        ShowPhoto(newTex);
     }
 
     public List<CaptureTarget> GetTargets(Camera cam)
@@ -151,9 +155,9 @@ public class PhotoCapture : MonoBehaviour
         return v;
     }
 
-    void ShowPhoto()
+    void ShowPhoto(Texture2D tex)
     {
-        Sprite photoSprite = Sprite.Create(screenCapture, new Rect(0.0f, 0.0f, screenCapture.width, screenCapture.height), new Vector2(0.5f, 0.5f), 100.0f);
+        Sprite photoSprite = Sprite.Create(tex, new Rect(0.0f, 0.0f, screenCapture.width, screenCapture.height), new Vector2(0.5f, 0.5f), 100.0f);
         photoDisplayArea.sprite = photoSprite;
 
         photoFrame.SetActive(true);
@@ -176,20 +180,20 @@ public class PhotoCapture : MonoBehaviour
         cameraUI.SetActive(true);
     }
 
-    Texture2D CaptureCameraView()
+    Texture2D CaptureCameraView(Camera cam)
     {
         RenderTexture renderTexture = new RenderTexture(Screen.width, Screen.height, 24);
-        Camera.main.targetTexture = renderTexture;
-        Camera.main.Render();
-
+        cam.targetTexture = renderTexture;
+        cam.Render();
+        
         Texture2D texture = new Texture2D(renderTexture.width, renderTexture.height, TextureFormat.RGB24, false);
         RenderTexture.active = renderTexture;
         texture.ReadPixels(new Rect(0, 0, renderTexture.width, renderTexture.height), 0, 0);
         texture.Apply();
 
-        Camera.main.targetTexture = null;
+        cam.targetTexture = null;
         RenderTexture.active = null;
-        Object.Destroy(renderTexture);
+        Destroy(renderTexture);
 
         return texture;
     }

@@ -21,7 +21,7 @@ public class PlayerController : MonoBehaviour
     Vector3 knockback;
     CharacterController CC;
     public enum State
-    { movement, damage, croutch, photo, projectile }
+    { movement, damage, croutch, photo, projectile, none }
 
     [Space]
     public State currentState;
@@ -66,6 +66,9 @@ public class PlayerController : MonoBehaviour
 
             case State.projectile:
                 ProjectileFunction();
+                break;
+
+            case State.none:
                 break;
         }
 
@@ -332,6 +335,12 @@ public class PlayerController : MonoBehaviour
     public GameObject waterRipple;
     public bool isGrounded;
 
+    [TagSelector]
+    public string puddleTag;
+
+    [TagSelector]
+    public string groundTag;
+
     public enum AreaFootSteps
     { puddle, ground, none }
 
@@ -343,8 +352,25 @@ public class PlayerController : MonoBehaviour
         float MvY = Input.GetAxis("Vertical");
         Vector3 Mv = new Vector3(MvX, 0, MvY);
 
-        isGrounded = Physics.Raycast(transform.position, Vector3.down, 1.15f);
-        Debug.DrawRay(transform.position, Vector3.down * 1.15f, Color.red);
+        RaycastHit hit;
+
+        if (Physics.Raycast(transform.position, Vector3.down * 1.15f, out hit))
+        {
+            isGrounded = true;
+
+            if (hit.transform.tag == puddleTag)
+            {
+                steps = AreaFootSteps.puddle;
+            }
+            else if (hit.transform.tag == groundTag)
+            {
+                steps = AreaFootSteps.ground;
+            }
+            else
+            {
+                steps = AreaFootSteps.none;
+            }
+        }
 
         if (steps == AreaFootSteps.puddle)
         {

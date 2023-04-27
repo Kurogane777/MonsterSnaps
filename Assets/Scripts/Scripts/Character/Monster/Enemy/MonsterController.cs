@@ -8,7 +8,7 @@ public class MonsterController : MonoBehaviour
     [Header("Detect and Lost Player")]
     [SerializeField] DetectionZone plyDetectionZone;
     [SerializeField] DetectionZone prjDetectionZone;
-    [HideInInspector] public GameObject target;
+    public GameObject target;
     [Space]
     [SerializeField] private GameObject expressionSlot;
     [SerializeField] private GameObject dPlyerParticles;
@@ -36,6 +36,7 @@ public class MonsterController : MonoBehaviour
     [SerializeField] Color detectSColor = new Color(0f, 0f, 0f, 0.4f);
     [SerializeField] bool detectionGizmo;
     [SerializeField] bool hiddenRangeGizmo;
+    float attractTimer;
 
     [Header("<Player Range>")]
     [SerializeField] private Color plyRadiusColor = new Color(0f, 50f, 90f, 0.3f);
@@ -135,6 +136,19 @@ public class MonsterController : MonoBehaviour
     void AttractFunction()
     {
         Chase();
+        Vector3 p = transform.position;
+        p.y = 0;
+        Vector3 pp = target.transform.position;
+        pp.y = 0;
+        if (Vector3.Distance(p, pp) < 0.1f)
+        {
+            attractTimer -= Time.deltaTime;
+            if (attractTimer<=0)
+            {
+                currentState = State.patrol;
+                PatrolFunction();
+            }
+        }
         agent.speed = nmSpeed;
         agent.acceleration = nmAcc;
     }
@@ -142,7 +156,7 @@ public class MonsterController : MonoBehaviour
 
     void Action()
     {
-        if (LookForPlayerSoundSight() == true && AttackPlayerRange() == false) { currentState = State.chase; } 
+        if (LookForPlayerSoundSight() == true && AttackPlayerRange() == false && TargetIsPlayer()) { currentState = State.chase; } 
         if (LookForPlayerSoundSight() == true) // ExclaimationMark
         {
             if (exclaimationMark == false)
@@ -153,10 +167,19 @@ public class MonsterController : MonoBehaviour
             }
         } 
         if (expressionObj == null) { expressionObj = null; } 
-        if (AttackPlayerRange() == true) { currentState = State.attack; } 
+        if (AttackPlayerRange() == true && currentState==State.chase) { currentState = State.attack; } 
         if (OutofRangePlayer() == false) { currentState = State.patrol; exclaimationMark = false; }
     }
-
+    public void Distraction(Transform t, float timer)
+    {
+        if (currentState != State.attack || currentState != State.chase)
+        {
+            target = t.gameObject;
+            currentState = State.attract;
+            attractTimer = timer;
+            AttractFunction();
+        }
+    }
     #region Detect&Attack
     void DetectForPlayer()
     {
@@ -165,23 +188,10 @@ public class MonsterController : MonoBehaviour
             // Calculate direction to target object
             target = plyDetectionZone.detectedObjs[0].gameObject;
         }
-        else
-        {
-            target = null;
-        }
-    }
-
-    void DetectOnProjectile()
-    {
-        if (prjDetectionZone.detectedObjs.Count > 0)
-        {
-            // Calculate direction to target object
-            target = prjDetectionZone.detectedObjs[0].gameObject;
-        }
-        else
-        {
-            target = null;
-        }
+        //else
+        //{
+        //    target = null;
+        //}
     }
 
     void AttackPlayer()
@@ -296,7 +306,10 @@ public class MonsterController : MonoBehaviour
 
         return false;
     }
-
+    bool TargetIsPlayer()
+    {
+        return target.TryGetComponent(out PlayerController pc);
+    }
     bool OutofRangePlayer()
     {
         Vector3 enemyPosition = transform.position;
