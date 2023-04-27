@@ -65,7 +65,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3809301355814779349, guid: a594201004d53fb438f8686e26e35dd2, type: 3}
       propertyPath: m_Name
-      value: Mushroom thin (1)
+      value: Thin mush 1
       objectReference: {fileID: 0}
     - target: {fileID: 4258333208025430938, guid: a594201004d53fb438f8686e26e35dd2, type: 3}
       propertyPath: m_Height
@@ -74,6 +74,14 @@ PrefabInstance:
     - target: {fileID: 4258333208025430938, guid: a594201004d53fb438f8686e26e35dd2, type: 3}
       propertyPath: m_Center.y
       value: -0.10010862
+      objectReference: {fileID: 0}
+    - target: {fileID: 7364208628394098473, guid: a594201004d53fb438f8686e26e35dd2, type: 3}
+      propertyPath: m_Center.y
+      value: -0.1001086
+      objectReference: {fileID: 0}
+    - target: {fileID: 7364208628394098473, guid: a594201004d53fb438f8686e26e35dd2, type: 3}
+      propertyPath: m_Extents.y
+      value: 0.64049
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a594201004d53fb438f8686e26e35dd2, type: 3}

@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5745188888256333365}
   - component: {fileID: 3203219876684933277}
+  - component: {fileID: 1633897908985909634}
   m_Layer: 0
   m_Name: Big rock
   m_TagString: Untagged
@@ -47,6 +48,22 @@ CapsuleCollider:
   m_Height: 1.715601
   m_Direction: 1
   m_Center: {x: 0, y: -0.36812973, z: 0}
+--- !u!208 &1633897908985909634
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2785977620761002905}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 0
+  m_Extents: {x: 0.6483397, y: 0.8578005, z: 0.6483397}
+  m_MoveThreshold: 0.1
+  m_Carve: 0
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 0, y: -0.3681297, z: 0}
+  m_TimeToStationary: 0.5
 --- !u!1 &3493882355369709737
 GameObject:
   m_ObjectHideFlags: 0

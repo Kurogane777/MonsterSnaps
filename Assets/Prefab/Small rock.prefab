@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5851306280872739419}
   - component: {fileID: 6050819311969250308}
+  - component: {fileID: 340384594121023974}
   m_Layer: 0
   m_Name: Small rock
   m_TagString: Untagged
@@ -47,6 +48,22 @@ CapsuleCollider:
   m_Height: 1.4873195
   m_Direction: 1
   m_Center: {x: 0, y: -0.24365973, z: 0}
+--- !u!208 &340384594121023974
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8802231301957012275}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 0
+  m_Extents: {x: 0.5, y: 0.7436595, z: 0.5}
+  m_MoveThreshold: 0.1
+  m_Carve: 0
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 0, y: -0.2436597, z: 0}
+  m_TimeToStationary: 0.5
 --- !u!1 &8891589144404978778
 GameObject:
   m_ObjectHideFlags: 0

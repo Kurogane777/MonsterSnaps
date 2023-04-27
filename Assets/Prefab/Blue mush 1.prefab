@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 9014364592132376509}
   - component: {fileID: 7892456403303725782}
+  - component: {fileID: 6418629652340096909}
   m_Layer: 0
   m_Name: Blue mush 1
   m_TagString: Untagged
@@ -47,6 +48,22 @@ CapsuleCollider:
   m_Height: 1.5316486
   m_Direction: 1
   m_Center: {x: 0, y: -0.25008297, z: 0}
+--- !u!208 &6418629652340096909
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9014364592132376506}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 0
+  m_Extents: {x: 0.5187616, y: 0.7658245, z: 0.5187616}
+  m_MoveThreshold: 0.1
+  m_Carve: 0
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 0, y: -0.250083, z: 0}
+  m_TimeToStationary: 0.5
 --- !u!1 &9014364593744971678
 GameObject:
   m_ObjectHideFlags: 0

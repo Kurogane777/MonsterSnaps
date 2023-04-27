@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3685969301245842120}
   - component: {fileID: 4258333208025430938}
+  - component: {fileID: 7364208628394098473}
   m_Layer: 0
   m_Name: Thin mush
   m_TagString: Untagged
@@ -47,6 +48,22 @@ CapsuleCollider:
   m_Height: 0.97352505
   m_Direction: 1
   m_Center: {x: 0.00051546097, y: -0.0966382, z: 0}
+--- !u!208 &7364208628394098473
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3809301355814779349}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 0
+  m_Extents: {x: 0.2087836, y: 0.4867625, z: 0.2087836}
+  m_MoveThreshold: 0.1
+  m_Carve: 0
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 0.000515461, y: -0.0966382, z: 0}
+  m_TimeToStationary: 0.5
 --- !u!1 &4448175122545562713
 GameObject:
   m_ObjectHideFlags: 0

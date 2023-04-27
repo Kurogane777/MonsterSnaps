@@ -57,7 +57,28 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8802231301957012275, guid: 25f5b7289772dae45bb44ae99abdf083, type: 3}
       propertyPath: m_Name
-      value: Small rock (1)
+      value: Small rock 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 25f5b7289772dae45bb44ae99abdf083, type: 3}
+--- !u!1 &3574996670226640807 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8802231301957012275, guid: 25f5b7289772dae45bb44ae99abdf083, type: 3}
+  m_PrefabInstance: {fileID: 5457023802349773972}
+  m_PrefabAsset: {fileID: 0}
+--- !u!208 &7254502343873103054
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3574996670226640807}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 0
+  m_Extents: {x: 0.5, y: 0.7436595, z: 0.5}
+  m_MoveThreshold: 0.1
+  m_Carve: 0
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 0, y: -0.2436597, z: 0}
+  m_TimeToStationary: 0.5
