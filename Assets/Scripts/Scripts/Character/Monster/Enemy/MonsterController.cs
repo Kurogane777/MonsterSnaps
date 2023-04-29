@@ -364,7 +364,9 @@ public class MonsterController : MonoBehaviour
 
         // Choose the next point in the array as the destination,
         // cycling to the start if necessary.
-        destPoint = (destPoint + 1) % pList.points.Length;
+        //destPoint = (destPoint + 1) % pList.points.Length;
+
+        destPoint = RandomNum(destPoint, 0, pList.points.Length);
     }
 
     public PatrolList[] pListArea;
@@ -424,6 +426,20 @@ public class MonsterController : MonoBehaviour
         }
     }
     #endregion
+
+    int RandomNum(int lastRandNum, int minRandNum, int maxRandNum)
+    {
+        int newRandNum = Random.Range(minRandNum, maxRandNum);
+
+        if (newRandNum == lastRandNum)
+        {
+            return RandomNum(newRandNum, minRandNum, maxRandNum);
+        }
+        else
+        {
+            return newRandNum;
+        }
+    }
 
     #region Gizmos
 #if UNITY_EDITOR
