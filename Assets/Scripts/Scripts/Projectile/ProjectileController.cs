@@ -1,45 +1,106 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class ProjectileController : MonoBehaviour
 {
-    //public float rotationSpeed = 1;
     public float projectileForce = 5;
 
-    //public float mouseSensitivity = 100f;
-
-    //[Space]
-    //public Vector2 _horizontalMinMax = new Vector2(40, 133);
-    //public Vector2 _verticalMinMax = new Vector2(0, 25);
-
     [Space]
-    public GameObject bullet;
+    public GameObject bulletB;
+    public GameObject bulletR;
     public Transform shotPoint;
+    public bool B_R_Start;
+    public bool B_R_Current;
+    public bool BAllowShoot;
+    public bool RAllowShoot;
 
-    private void Update()
+    public UnityEvent invokeB;
+    public UnityEvent invokeR;
+
+    GameObject currentBullet;
+
+    private void Awake()
     {
-        ////float HorizontalRotation = Input.GetAxis("Horizontal");
-        ////float VericalRotation = Input.GetAxis("Vertical");
-
-        //float HorizontalRotation = Input.GetAxis("Mouse X") * mouseSensitivity * Time.deltaTime;
-        //float VericalRotation = (Input.GetAxis("Mouse Y") * -1) * mouseSensitivity * Time.deltaTime;
-
-        ////transform.rotation = Quaternion.Euler(transform.rotation.eulerAngles + new Vector3(0, HorizontalRotation * rotationSpeed, VericalRotation * rotationSpeed));
-
-        //var tRotation = transform.rotation.eulerAngles + new Vector3(0, HorizontalRotation * rotationSpeed, VericalRotation * rotationSpeed);
-
-        //// Limit rotation of Horizontal and Vertical
-        //transform.rotation = Quaternion.Euler(new Vector3(tRotation.x, 
-        //Mathf.Clamp(tRotation.y, _horizontalMinMax.x, _horizontalMinMax.y),
-        //Mathf.Clamp(tRotation.z, _verticalMinMax.x, _verticalMinMax.y)));
-
-        if (Input.GetKeyDown(KeyCode.Mouse0)) // Shoot bullet
+        if (!B_R_Start)
         {
-            GameObject CreatedCannonball = Instantiate(bullet, shotPoint.position, shotPoint.rotation);
-            CreatedCannonball.GetComponent<Rigidbody>().velocity = shotPoint.transform.up * projectileForce;
+            currentBullet = bulletB;
+            B_R_Current = false;
+        }
+        else
+        {
+            currentBullet = bulletR;
+            B_R_Current = true;
         }
     }
 
+    private void Update()
+    {
+        if (!B_R_Current)
+        {
+            if (BAllowShoot)
+            {
+                if (Input.GetKeyDown(KeyCode.Mouse0)) // Shoot bullet
+                {
+                    GameObject CreatedCannonball = Instantiate(currentBullet, shotPoint.position, shotPoint.rotation);
+                    CreatedCannonball.GetComponent<Rigidbody>().velocity = shotPoint.transform.up * projectileForce;
+                }
+            }
 
+            if (Input.GetKeyDown(KeyCode.Mouse0))
+            {
+                invokeB.Invoke();
+            }
+        }
+        else
+        {
+            if (RAllowShoot)
+            {
+                if (Input.GetKeyDown(KeyCode.Mouse0)) // Shoot bullet
+                {
+                    GameObject CreatedCannonball = Instantiate(currentBullet, shotPoint.position, shotPoint.rotation);
+                    CreatedCannonball.GetComponent<Rigidbody>().velocity = shotPoint.transform.up * projectileForce;
+                }
+            }
+
+
+            if (Input.GetKeyDown(KeyCode.Mouse0))
+            {
+                invokeR.Invoke();
+            }
+        }
+    }
+
+    public void bullB()
+    {
+        currentBullet = bulletB;
+        B_R_Current = false;
+    }
+
+    public void bullBNotAllow()
+    {
+        BAllowShoot = false;
+    }
+
+    public void bullBAllow()
+    {
+        BAllowShoot = true;
+    }
+
+    public void bullR()
+    {
+        currentBullet = bulletR;
+        B_R_Current = true;
+    }
+
+    public void bullRNotAllow()
+    {
+        RAllowShoot = false;
+    }
+
+    public void bullRAllow()
+    {
+        RAllowShoot = true;
+    }
 }
