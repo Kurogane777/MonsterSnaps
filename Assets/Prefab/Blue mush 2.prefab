@@ -7,9 +7,13 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 6504243109402134132, guid: affa71312374db14886616ffa3c89dca, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 9014364592132376506, guid: affa71312374db14886616ffa3c89dca, type: 3}
       propertyPath: m_Name
-      value: Mushroom b2 Prefab
+      value: Blue mush 2
       objectReference: {fileID: 0}
     - target: {fileID: 9014364592132376509, guid: affa71312374db14886616ffa3c89dca, type: 3}
       propertyPath: m_RootOrder
