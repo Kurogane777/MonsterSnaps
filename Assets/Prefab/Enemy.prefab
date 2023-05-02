@@ -208,6 +208,7 @@ MonoBehaviour:
   atkRadiusColor: {r: 255, g: 255, b: 255, a: 0.15}
   atkRadiusSize: 5
   attackGizmo: 1
+  distDestroy: 10
   currentState: 0
   pList: {fileID: 0}
   pListArea: []
@@ -255,7 +256,7 @@ SphereCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 15
+  m_Radius: 30
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &6480218664088777560
 MonoBehaviour:
@@ -273,7 +274,7 @@ MonoBehaviour:
   detectedObjs: []
   col: {fileID: 0}
   color: {r: 1, g: 0, b: 0, a: 1}
-  radius: 15
+  radius: 30
 --- !u!1 &6480218664106073903
 GameObject:
   m_ObjectHideFlags: 0

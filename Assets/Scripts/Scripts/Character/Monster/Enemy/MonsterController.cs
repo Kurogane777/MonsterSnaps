@@ -48,6 +48,10 @@ public class MonsterController : MonoBehaviour
     [SerializeField] private float atkRadiusSize = 5f;
     [SerializeField] bool attackGizmo;
 
+    [Space]
+
+    public float distDestroy = 10f;
+
     public enum State
     { patrol, run, chase, attack, hide, attract, Scare }
 
@@ -111,6 +115,16 @@ public class MonsterController : MonoBehaviour
         }
 
         if (currentState != State.patrol) { pList = null; pListArea = null; }
+
+        if (target != null)
+        {
+            bool checkDestroy = false;
+            checkDestroy = DistDestroy();
+            if (checkDestroy)
+            {
+                Destroy(gameObject);
+            }
+        }
     }
 
     #region StateChange
@@ -347,6 +361,17 @@ public class MonsterController : MonoBehaviour
 
         return false;
     }
+
+    bool DistDestroy()
+    {
+        if (Vector3.Distance(transform.position, target.transform.position) >= distDestroy)
+        {
+            return true;
+        }
+        return false;
+    }
+
+
     #endregion
 
     #region Patrol

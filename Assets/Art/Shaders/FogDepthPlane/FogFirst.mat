@@ -7,7 +7,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Fog
+  m_Name: FogFirst
   m_Shader: {fileID: 4800000, guid: 5d7c1551514ee824887bc618c8adaa19, type: 3}
   m_ValidKeywords: []
   m_InvalidKeywords: []
@@ -30,8 +30,8 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _CameraFadeDistance: 1
-    - _DepthDistance: 1.7
+    - _CameraFadeDistance: 2782.7
+    - _DepthDistance: 248
     - __dirty: 0
     m_Colors:
     - _Color: {r: 0, g: 0, b: 0, a: 0}
