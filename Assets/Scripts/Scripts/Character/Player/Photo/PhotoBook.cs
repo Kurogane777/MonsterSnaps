@@ -18,6 +18,8 @@ public class PhotoBook : MonoBehaviour
     bool open;
     public Text pageNumber;
     public static PhotoBook main;
+
+    public bool OffOnPage;
     private void Awake()
     {
         main = this;
@@ -31,18 +33,37 @@ public class PhotoBook : MonoBehaviour
     public void Update()
     {
         int maxPages = (allPictures.Count / (pageSize * 2)) * 2;
-        if (Input.GetKeyDown(KeyCode.Alpha1))
-        {
-            page = Mathf.Max(0, page-2);
-            Populate();
-        }
-        if (Input.GetKeyDown(KeyCode.Alpha2))
-        {
-            page = Mathf.Min((allPictures.Count / (pageSize * 2)) * 2, page + 2);
-            Populate();
-        }
+        ChangePage();
         pageNumber.text = $"{page / 2}/{maxPages/2}";
     }
+
+    public void OffChangePage()
+    {
+        OffOnPage = false;
+    }
+
+    public void OnChangePage()
+    {
+        OffOnPage = true;
+    }
+
+    void ChangePage()
+    {
+        if (OffOnPage)
+        {
+            if (Input.GetKeyDown(KeyCode.LeftArrow))
+            {
+                page = Mathf.Max(0, page - 2);
+                Populate();
+            }
+            if (Input.GetKeyDown(KeyCode.RightArrow))
+            {
+                page = Mathf.Min((allPictures.Count / (pageSize * 2)) * 2, page + 2);
+                Populate();
+            }
+        }
+    }
+
     public void Open()
     {
         open = true;
