@@ -48,11 +48,11 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _Foam:
-        m_Texture: {fileID: 2800000, guid: 5f18511402154bf18ca40b7406ed597e, type: 3}
+        m_Texture: {fileID: 2800000, guid: d9f9469c510405349a7598b07217aab4, type: 3}
         m_Scale: {x: 20, y: 20}
         m_Offset: {x: 0, y: 0}
     - _FoamDistortion:
-        m_Texture: {fileID: 2800000, guid: 4d85556227fd4d5a8f034d10f4261675, type: 3}
+        m_Texture: {fileID: 2800000, guid: d9f9469c510405349a7598b07217aab4, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MainTex:
@@ -64,7 +64,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _NormalOnlyNoPolyMode:
-        m_Texture: {fileID: 2800000, guid: e9f5cbcd3734429daf37d699424eb645, type: 3}
+        m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _OcclusionMap:
@@ -76,7 +76,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _WaveGuide:
-        m_Texture: {fileID: 2800000, guid: b099462194604bd2957f0114083b8cf0, type: 3}
+        m_Texture: {fileID: 2800000, guid: d9f9469c510405349a7598b07217aab4, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _texcoord:
@@ -104,7 +104,7 @@ Material:
     - _EmissionWeight: 1.12
     - _EmissionWeight1: 1.12
     - _EnableFogOnTransparent: 1
-    - _FoamDist: 0.114
+    - _FoamDist: 0.197
     - _GlossMapScale: 1
     - _Glossiness: 0.5
     - _GlossyReflections: 1
@@ -112,7 +112,7 @@ Material:
     - _Metallic: 0
     - _Mode: 0
     - _OcclusionStrength: 1
-    - _Opacity: 0.928
+    - _Opacity: 0.716
     - _Parallax: 0.02
     - _ReceivesSSR: 1
     - _RenderQueueType: 5
@@ -137,8 +137,8 @@ Material:
     - _TransparentZWrite: 0
     - _UVSec: 0
     - _UseShadowThreshold: 0
-    - _WaveHeight: 0.15
-    - _WaveSpeed: 0.42
+    - _WaveHeight: 0
+    - _WaveSpeed: 0.9
     - _ZTestDepthEqualForOpaque: 4
     - _ZTestGBuffer: 4
     - _ZTestTransparent: 4
