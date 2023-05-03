@@ -13,7 +13,7 @@ public class PlayerHealth : MonoBehaviour
 
     public UnityEvent heartsZero;
 
-    bool callOnceDeath;
+    public bool callOnceDeath;
 
     public static PlayerHealth main;
 
@@ -30,8 +30,8 @@ public class PlayerHealth : MonoBehaviour
     {
         numberHearts = Mathf.Clamp(numberHearts, 0, heartsUI.Count);
 
-        if (!callOnceDeath) { heartsZero.Invoke(); callOnceDeath = true; }
-        if (numberHearts != 0) { callOnceDeath = false; }
+        if (callOnceDeath) { heartsZero.Invoke(); callOnceDeath = false; }
+        if (numberHearts <= 0) { callOnceDeath = true; }
     }
 
     public void Damage()

@@ -17,22 +17,12 @@ public class PauseController : MonoBehaviour
 
     public void Toggle()
     {
-        if (Input.GetKeyDown(inputC.pause))
+        if (inputC != null)
         {
-            //_isPaused = !_isPaused;
-
-            //if (_isPaused)
-            //{
-            //    Time.timeScale = 0;
-            //    GamePaused.Invoke();
-            //}
-            //else
-            //{
-            //    Time.timeScale = 1;
-            //    GameResumed.Invoke();
-            //}
-
-            PauseR();
+            if (Input.GetKeyDown(inputC.pause))
+            {
+                PauseR();
+            }
         }
     }
 
