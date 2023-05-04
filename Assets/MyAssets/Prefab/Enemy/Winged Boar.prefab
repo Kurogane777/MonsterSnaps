@@ -209,7 +209,7 @@ MonoBehaviour:
   atkRadiusSize: 5
   attackGizmo: 1
   distDestroy: 30
-  HostileCoward: 0
+  HostileCoward: 1
   currentState: 0
   pList: {fileID: 0}
   pListArea: []
