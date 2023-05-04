@@ -209,6 +209,7 @@ MonoBehaviour:
   atkRadiusSize: 5
   attackGizmo: 1
   distDestroy: 10
+  HostileCoward: 1
   currentState: 0
   pList: {fileID: 0}
   pListArea: []
@@ -425,6 +426,7 @@ MonoBehaviour:
   mainTransform: {fileID: 6480218663823136213}
   animator: {fileID: 6480218664439513128}
   spriteRenderer: {fileID: 6480218664439513131}
+  flipFlop: 0
 --- !u!95 &6480218664439513128
 Animator:
   serializedVersion: 4

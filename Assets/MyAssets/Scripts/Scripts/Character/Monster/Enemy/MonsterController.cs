@@ -51,6 +51,7 @@ public class MonsterController : MonoBehaviour
     [Space]
 
     public float distDestroy = 10f;
+    [SerializeField] bool HostileCoward;
 
     public enum State
     { patrol, run, chase, attack, hide, attract, Scare }
@@ -170,19 +171,37 @@ public class MonsterController : MonoBehaviour
 
     void Action()
     {
-        if (LookForPlayerSoundSight() == true && AttackPlayerRange() == false && TargetIsPlayer()) { currentState = State.chase; } 
-        if (LookForPlayerSoundSight() == true) // ExclaimationMark
+        if (!HostileCoward)
         {
-            if (exclaimationMark == false)
+            if (LookForPlayerSoundSight() == true && AttackPlayerRange() == false && TargetIsPlayer()) { currentState = State.chase; }
+            if (LookForPlayerSoundSight() == true) // ExclaimationMark
             {
-                expressionObj = Instantiate(dPlyerParticles, expressionSlot.transform.position, Quaternion.identity);
-                expressionObj.transform.SetParent(expressionSlot.transform);
-                exclaimationMark = true;
+                if (exclaimationMark == false)
+                {
+                    expressionObj = Instantiate(dPlyerParticles, expressionSlot.transform.position, Quaternion.identity);
+                    expressionObj.transform.SetParent(expressionSlot.transform);
+                    exclaimationMark = true;
+                }
             }
-        } 
-        if (expressionObj == null) { expressionObj = null; } 
-        if (AttackPlayerRange() == true && currentState==State.chase) { currentState = State.attack; } 
-        if (OutofRangePlayer() == false) { currentState = State.patrol; exclaimationMark = false; }
+            if (expressionObj == null) { expressionObj = null; }
+            if (AttackPlayerRange() == true && currentState == State.chase) { currentState = State.attack; }
+            if (OutofRangePlayer() == false) { currentState = State.patrol; exclaimationMark = false; }
+        }
+        else
+        {
+            if (LookForPlayerSoundSight() == true && TargetIsPlayer()) { currentState = State.run; }
+            if (LookForPlayerSoundSight() == true) // ExclaimationMark
+            {
+                if (exclaimationMark == false)
+                {
+                    expressionObj = Instantiate(dPlyerParticles, expressionSlot.transform.position, Quaternion.identity);
+                    expressionObj.transform.SetParent(expressionSlot.transform);
+                    exclaimationMark = true;
+                }
+            }
+            if (expressionObj == null) { expressionObj = null; }
+            if (OutofRangePlayer() == false) { currentState = State.patrol; exclaimationMark = false; }
+        }
     }
     public void Distraction(Transform t, float timer)
     {
