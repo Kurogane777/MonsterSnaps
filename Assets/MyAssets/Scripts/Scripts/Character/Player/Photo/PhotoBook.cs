@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.UI;
 
 public class PhotoBook : MonoBehaviour
@@ -20,6 +21,9 @@ public class PhotoBook : MonoBehaviour
     public static PhotoBook main;
 
     public bool OffOnPage;
+    public UnityEvent leftClick;
+    public UnityEvent RightClick;
+
     private void Awake()
     {
         main = this;
@@ -53,11 +57,13 @@ public class PhotoBook : MonoBehaviour
         {
             if (Input.GetKeyDown(KeyCode.LeftArrow))
             {
+                leftClick.Invoke();
                 page = Mathf.Max(0, page - 2);
                 Populate();
             }
             if (Input.GetKeyDown(KeyCode.RightArrow))
             {
+                RightClick.Invoke();
                 page = Mathf.Min((allPictures.Count / (pageSize * 2)) * 2, page + 2);
                 Populate();
             }
