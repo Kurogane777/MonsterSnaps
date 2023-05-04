@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.7619173, g: 0.78572065, b: 0.73050946, a: 1}
+  m_IndirectSpecularColor: {r: 0.7619173, g: 0.7857206, b: 0.73050946, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -2136,7 +2136,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 87071437}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: -0.62, z: -0.96}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -8123,7 +8123,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 320139972}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 68.09006, y: 0.17, z: 13.526834}
+  m_LocalPosition: {x: 68.09006, y: 0.49, z: 13.526834}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -8155,8 +8155,8 @@ Transform:
   m_GameObject: {fileID: 339613041}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 63.31, y: 11.7, z: -9.01}
-  m_LocalScale: {x: 0.748071, y: 0.748071, z: 0.748071}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 838166020}
   m_Father: {fileID: 1988655924}
@@ -8268,8 +8268,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 355362832}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.05, y: 0.284, z: 0}
-  m_LocalScale: {x: 0.78446496, y: 0.78446496, z: 0.78446496}
+  m_LocalPosition: {x: -0.05, y: -0.24, z: 0}
+  m_LocalScale: {x: 0.50806093, y: 0.50806093, z: 0.50806093}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 839238353}
@@ -10070,6 +10070,9 @@ GameObject:
   - component: {fileID: 439620549}
   - component: {fileID: 439620552}
   - component: {fileID: 439620551}
+  - component: {fileID: 439620554}
+  - component: {fileID: 439620553}
+  - component: {fileID: 439620555}
   m_Layer: 0
   m_Name: Sphere
   m_TagString: Untagged
@@ -10086,7 +10089,7 @@ Transform:
   m_GameObject: {fileID: 439620548}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 23.4, y: -11.47, z: -118.3}
-  m_LocalScale: {x: 27.555779, y: 27.555779, z: 27.555779}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1529362069}
@@ -10142,6 +10145,50 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 439620548}
   m_Mesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &439620553
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 439620548}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4997d1cf9ebb22e4b938b55c4be45fb3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  wildMonsters:
+  - monster: {fileID: 6480218663823136217, guid: 41cb301d2cc8dd843879c56301fc48d6, type: 3}
+    chancePercentage: 100
+  totalChance: 100
+--- !u!114 &439620554
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 439620548}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ee3447fbb6a1e434896d9b1ab1b7f101, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  spawnTime: 30
+  spawnRadius: 15
+  pRad: 20
+--- !u!135 &439620555
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 439620548}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 0
+  serializedVersion: 2
+  m_Radius: 15
+  m_Center: {x: 0, y: -0.000000014901161, z: 0.00000011920929}
 --- !u!1 &440899029
 GameObject:
   m_ObjectHideFlags: 0
@@ -12235,7 +12282,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 560140510}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -44.495003, y: -0.3, z: 68.6}
+  m_LocalPosition: {x: -39.82, y: -0.3, z: 59.33}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -12492,6 +12539,9 @@ GameObject:
   - component: {fileID: 563144948}
   - component: {fileID: 563144951}
   - component: {fileID: 563144950}
+  - component: {fileID: 563144953}
+  - component: {fileID: 563144952}
+  - component: {fileID: 563144954}
   m_Layer: 0
   m_Name: Sphere (1)
   m_TagString: Untagged
@@ -12507,8 +12557,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 563144947}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -5.1, y: -11.47, z: -118.5}
-  m_LocalScale: {x: 52.554764, y: 52.554764, z: 52.554764}
+  m_LocalPosition: {x: -5.1, y: -11, z: -118.5}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1734663715}
@@ -12564,6 +12614,52 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 563144947}
   m_Mesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &563144952
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 563144947}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4997d1cf9ebb22e4b938b55c4be45fb3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  wildMonsters:
+  - monster: {fileID: 6480218663823136217, guid: b334556c698159d4199b2240f5f58021, type: 3}
+    chancePercentage: 90
+  - monster: {fileID: 6480218663823136217, guid: 41cb301d2cc8dd843879c56301fc48d6, type: 3}
+    chancePercentage: 10
+  totalChance: 100
+--- !u!114 &563144953
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 563144947}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ee3447fbb6a1e434896d9b1ab1b7f101, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  spawnTime: 3
+  spawnRadius: 28
+  pRad: 20
+--- !u!135 &563144954
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 563144947}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 0
+  serializedVersion: 2
+  m_Radius: 28
+  m_Center: {x: 0, y: -0.000000007450581, z: 0.000000059604645}
 --- !u!1 &563458500
 GameObject:
   m_ObjectHideFlags: 0
@@ -13527,7 +13623,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &598692261
 Transform:
   m_ObjectHideFlags: 0
@@ -21662,6 +21758,9 @@ GameObject:
   - component: {fileID: 725996257}
   - component: {fileID: 725996260}
   - component: {fileID: 725996259}
+  - component: {fileID: 725996262}
+  - component: {fileID: 725996261}
+  - component: {fileID: 725996263}
   m_Layer: 0
   m_Name: Sphere (1)
   m_TagString: Untagged
@@ -21677,8 +21776,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 725996256}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -10, y: -17.94, z: 2.6}
-  m_LocalScale: {x: 39.2221, y: 39.2221, z: 39.2221}
+  m_LocalPosition: {x: -10, y: -14.47, z: 2.6}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 109152976}
@@ -21734,6 +21833,50 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 725996256}
   m_Mesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &725996261
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 725996256}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4997d1cf9ebb22e4b938b55c4be45fb3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  wildMonsters:
+  - monster: {fileID: 6480218663823136217, guid: 88812a93ed5071b498494c785148173c, type: 3}
+    chancePercentage: 100
+  totalChance: 100
+--- !u!114 &725996262
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 725996256}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ee3447fbb6a1e434896d9b1ab1b7f101, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  spawnTime: 5
+  spawnRadius: 20
+  pRad: 20
+--- !u!135 &725996263
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 725996256}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 0
+  serializedVersion: 2
+  m_Radius: 20
+  m_Center: {x: 0, y: -0.0000000037252903, z: 0.000000059604645}
 --- !u!1 &726529074
 GameObject:
   m_ObjectHideFlags: 0
@@ -22326,7 +22469,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &744724600
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -24130,6 +24273,9 @@ GameObject:
   - component: {fileID: 838166020}
   - component: {fileID: 838166023}
   - component: {fileID: 838166022}
+  - component: {fileID: 838166025}
+  - component: {fileID: 838166024}
+  - component: {fileID: 838166026}
   m_Layer: 0
   m_Name: Sphere
   m_TagString: Untagged
@@ -24145,9 +24291,9 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 838166019}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 18.4, y: -21.3, z: -13.7}
-  m_LocalScale: {x: 47.138546, y: 47.138546, z: 47.138546}
-  m_ConstrainProportionsScale: 0
+  m_LocalPosition: {x: 13.57, y: -7.85, z: -10.16}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 339613042}
   m_RootOrder: 0
@@ -24202,6 +24348,50 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 838166019}
   m_Mesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &838166024
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 838166019}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4997d1cf9ebb22e4b938b55c4be45fb3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  wildMonsters:
+  - monster: {fileID: 6480218663823136217, guid: d1fbd4390b552f34aa2458b03a283e98, type: 3}
+    chancePercentage: 100
+  totalChance: 100
+--- !u!114 &838166025
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 838166019}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ee3447fbb6a1e434896d9b1ab1b7f101, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  spawnTime: 10
+  spawnRadius: 10
+  pRad: 20
+--- !u!135 &838166026
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 838166019}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 0
+  serializedVersion: 2
+  m_Radius: 10
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &839238352
 GameObject:
   m_ObjectHideFlags: 0
@@ -24231,8 +24421,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 839238352}
-  m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
-  m_LocalPosition: {x: 0, y: 6.95, z: 0}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 75.19, y: 1.27, z: 6.548}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -24246,7 +24436,7 @@ Transform:
   - {fileID: 257943497}
   m_Father: {fileID: 0}
   m_RootOrder: 11
-  m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &839238354
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -27124,6 +27314,9 @@ GameObject:
   - component: {fileID: 977751071}
   - component: {fileID: 977751074}
   - component: {fileID: 977751073}
+  - component: {fileID: 977751076}
+  - component: {fileID: 977751075}
+  - component: {fileID: 977751077}
   m_Layer: 0
   m_Name: Sphere
   m_TagString: Untagged
@@ -27140,7 +27333,7 @@ Transform:
   m_GameObject: {fileID: 977751070}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 16.7, y: -11.47, z: -126.7}
-  m_LocalScale: {x: 55.887463, y: 55.887463, z: 55.887463}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1182231380}
@@ -27196,6 +27389,50 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 977751070}
   m_Mesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &977751075
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 977751070}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4997d1cf9ebb22e4b938b55c4be45fb3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  wildMonsters:
+  - monster: {fileID: 6480218663823136217, guid: aa999dbd20ef7154da0c8e30aa612cef, type: 3}
+    chancePercentage: 100
+  totalChance: 100
+--- !u!114 &977751076
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 977751070}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ee3447fbb6a1e434896d9b1ab1b7f101, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  spawnTime: 8
+  spawnRadius: 30
+  pRad: 20
+--- !u!135 &977751077
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 977751070}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 0
+  serializedVersion: 2
+  m_Radius: 30
+  m_Center: {x: 0, y: -0.000000007450581, z: 0.000000059604645}
 --- !u!1 &978370558
 GameObject:
   m_ObjectHideFlags: 0
@@ -27300,15 +27537,15 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 979566768}
-  m_LocalRotation: {x: 0.28760806, y: -0, z: -0, w: 0.95774823}
-  m_LocalPosition: {x: 0, y: 12.36, z: -6.22}
+  m_LocalRotation: {x: 0.2840153, y: 0, z: 0, w: 0.95881975}
+  m_LocalPosition: {x: 75.19, y: 3.27, z: 2.97}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 87071441}
   m_Father: {fileID: 0}
   m_RootOrder: 9
-  m_LocalEulerAnglesHint: {x: 33.43, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 33, y: 0, z: 0}
 --- !u!114 &979566770
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -30706,7 +30943,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1160513271
 Transform:
   m_ObjectHideFlags: 0
@@ -31392,6 +31629,9 @@ GameObject:
   - component: {fileID: 1205197274}
   - component: {fileID: 1205197277}
   - component: {fileID: 1205197276}
+  - component: {fileID: 1205197279}
+  - component: {fileID: 1205197278}
+  - component: {fileID: 1205197280}
   m_Layer: 0
   m_Name: Sphere
   m_TagString: Untagged
@@ -31407,8 +31647,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1205197273}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 17.1, y: -11.47, z: -117.6}
-  m_LocalScale: {x: 47.138546, y: 47.138546, z: 47.138546}
+  m_LocalPosition: {x: 17.1, y: -11.366, z: -117.6}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 2101694343}
@@ -31464,6 +31704,52 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1205197273}
   m_Mesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &1205197278
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1205197273}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4997d1cf9ebb22e4b938b55c4be45fb3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  wildMonsters:
+  - monster: {fileID: 6480218663823136217, guid: 88812a93ed5071b498494c785148173c, type: 3}
+    chancePercentage: 50
+  - monster: {fileID: 6480218663823136217, guid: b334556c698159d4199b2240f5f58021, type: 3}
+    chancePercentage: 50
+  totalChance: 100
+--- !u!114 &1205197279
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1205197273}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ee3447fbb6a1e434896d9b1ab1b7f101, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  spawnTime: 3
+  spawnRadius: 25
+  pRad: 20
+--- !u!135 &1205197280
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1205197273}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 0
+  serializedVersion: 2
+  m_Radius: 25
+  m_Center: {x: 0, y: -0.000000014901161, z: -0.00000011920929}
 --- !u!1 &1214439353
 GameObject:
   m_ObjectHideFlags: 0
@@ -35692,7 +35978,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1451894223}
   m_LocalRotation: {x: 0, y: 0.7071068, z: -0.7071068, w: 0}
-  m_LocalPosition: {x: 0, y: 2, z: -13}
+  m_LocalPosition: {x: 0, y: -0.6, z: -13}
   m_LocalScale: {x: 896.45233, y: 747.79144, z: 747.7915}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -42581,6 +42867,9 @@ GameObject:
   - component: {fileID: 1731731252}
   - component: {fileID: 1731731255}
   - component: {fileID: 1731731254}
+  - component: {fileID: 1731731257}
+  - component: {fileID: 1731731256}
+  - component: {fileID: 1731731258}
   m_Layer: 0
   m_Name: Sphere
   m_TagString: Untagged
@@ -42596,8 +42885,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1731731251}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 20.9, y: -11.47, z: -113.91}
-  m_LocalScale: {x: 47.138546, y: 47.138546, z: 47.138546}
+  m_LocalPosition: {x: 20.9, y: -11.09, z: -113.91}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1938105570}
@@ -42653,6 +42942,54 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1731731251}
   m_Mesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &1731731256
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1731731251}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4997d1cf9ebb22e4b938b55c4be45fb3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  wildMonsters:
+  - monster: {fileID: 6480218663823136217, guid: 88812a93ed5071b498494c785148173c, type: 3}
+    chancePercentage: 50
+  - monster: {fileID: 6480218663823136217, guid: b334556c698159d4199b2240f5f58021, type: 3}
+    chancePercentage: 40
+  - monster: {fileID: 6480218663823136217, guid: aa999dbd20ef7154da0c8e30aa612cef, type: 3}
+    chancePercentage: 10
+  totalChance: 100
+--- !u!114 &1731731257
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1731731251}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ee3447fbb6a1e434896d9b1ab1b7f101, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  spawnTime: 3
+  spawnRadius: 25
+  pRad: 20
+--- !u!135 &1731731258
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1731731251}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 0
+  serializedVersion: 2
+  m_Radius: 25
+  m_Center: {x: -0.000000016763806, y: -0.000000014901161, z: 0.000000029802322}
 --- !u!1 &1732467052
 GameObject:
   m_ObjectHideFlags: 0
@@ -42664,6 +43001,9 @@ GameObject:
   - component: {fileID: 1732467053}
   - component: {fileID: 1732467056}
   - component: {fileID: 1732467055}
+  - component: {fileID: 1732467058}
+  - component: {fileID: 1732467057}
+  - component: {fileID: 1732467059}
   m_Layer: 0
   m_Name: Sphere
   m_TagString: Untagged
@@ -42679,8 +43019,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1732467052}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 19.3, y: -11.47, z: -117.7}
-  m_LocalScale: {x: 52.554764, y: 52.554764, z: 52.554764}
+  m_LocalPosition: {x: 19.3, y: -11.169, z: -117.7}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1734663715}
@@ -42736,6 +43076,50 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1732467052}
   m_Mesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &1732467057
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1732467052}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4997d1cf9ebb22e4b938b55c4be45fb3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  wildMonsters:
+  - monster: {fileID: 6480218663823136217, guid: b334556c698159d4199b2240f5f58021, type: 3}
+    chancePercentage: 100
+  totalChance: 100
+--- !u!114 &1732467058
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1732467052}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ee3447fbb6a1e434896d9b1ab1b7f101, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  spawnTime: 2
+  spawnRadius: 30
+  pRad: 20
+--- !u!135 &1732467059
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1732467052}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 0
+  serializedVersion: 2
+  m_Radius: 30
+  m_Center: {x: 0, y: -0.000000007450581, z: 0.000000059604645}
 --- !u!1 &1734663714
 GameObject:
   m_ObjectHideFlags: 0
@@ -50124,6 +50508,9 @@ GameObject:
   - component: {fileID: 2079599435}
   - component: {fileID: 2079599438}
   - component: {fileID: 2079599437}
+  - component: {fileID: 2079599440}
+  - component: {fileID: 2079599439}
+  - component: {fileID: 2079599441}
   m_Layer: 0
   m_Name: Sphere
   m_TagString: Untagged
@@ -50139,8 +50526,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2079599434}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 18.4, y: -17.94, z: -13.7}
-  m_LocalScale: {x: 47.138546, y: 47.138546, z: 47.138546}
+  m_LocalPosition: {x: 18.4, y: -15.59, z: -13.7}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 109152976}
@@ -50196,6 +50583,52 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2079599434}
   m_Mesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &2079599439
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2079599434}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4997d1cf9ebb22e4b938b55c4be45fb3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  wildMonsters:
+  - monster: {fileID: 6480218663823136217, guid: 88812a93ed5071b498494c785148173c, type: 3}
+    chancePercentage: 97
+  - monster: {fileID: 6480218663823136217, guid: d1fbd4390b552f34aa2458b03a283e98, type: 3}
+    chancePercentage: 3
+  totalChance: 100
+--- !u!114 &2079599440
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2079599434}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ee3447fbb6a1e434896d9b1ab1b7f101, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  spawnTime: 4
+  spawnRadius: 25
+  pRad: 20
+--- !u!135 &2079599441
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2079599434}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 0
+  serializedVersion: 2
+  m_Radius: 25
+  m_Center: {x: -0.00000011920929, y: -0.000000022351742, z: 0.000000029802322}
 --- !u!1 &2085604112
 GameObject:
   m_ObjectHideFlags: 0
