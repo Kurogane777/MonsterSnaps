@@ -14,6 +14,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] GameObject PhotoSystem;
     [SerializeField] GameObject ProjectileSystem;
     [SerializeField] PlayerHealth healthSystem;
+    [SerializeField] Animator pAnim;
 
     [Space]
     [SerializeField] float spawnRadius = 10;
@@ -261,6 +262,17 @@ public class PlayerController : MonoBehaviour
             Quaternion toRotation = Quaternion.LookRotation(movementDirection, Vector3.up);
 
             transform.rotation = Quaternion.RotateTowards(transform.rotation, toRotation, currentRotationSpeed * Time.deltaTime);
+        }
+
+        if (movementDirection != Vector3.zero)
+        {
+            pAnim.SetBool("isMoving", true);
+            //pAnim.gameObject.transform.localScale = new Vector3(2.061865f, 2.061865f, 2.061865f);
+        }
+        else
+        {
+            pAnim.SetBool("isMoving", false);
+            //pAnim.gameObject.transform.localScale = new Vector3(0.5080609f, 0.5080609f, 0.5080609f);
         }
         #endregion
     }
