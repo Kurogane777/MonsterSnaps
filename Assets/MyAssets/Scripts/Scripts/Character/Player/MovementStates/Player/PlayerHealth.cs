@@ -30,8 +30,7 @@ public class PlayerHealth : MonoBehaviour
     {
         numberHearts = Mathf.Clamp(numberHearts, 0, heartsUI.Count);
 
-        if (callOnceDeath) { heartsZero.Invoke(); callOnceDeath = false; }
-        if (numberHearts <= 0) { callOnceDeath = true; }
+        if (numberHearts <= 0 && !callOnceDeath) { heartsZero.Invoke(); callOnceDeath = true; }
     }
 
     public void Damage()

@@ -208,7 +208,7 @@ MonoBehaviour:
   atkRadiusColor: {r: 255, g: 255, b: 255, a: 0.15}
   atkRadiusSize: 5
   attackGizmo: 1
-  distDestroy: 10
+  distDestroy: 30
   HostileCoward: 0
   currentState: 0
   pList: {fileID: 0}
