@@ -11,7 +11,8 @@ GameObject:
   - component: {fileID: 6863876921418902826}
   - component: {fileID: 6531890157172925990}
   - component: {fileID: 3793041584736303113}
-  m_Layer: 0
+  - component: {fileID: 97166420392451949}
+  m_Layer: 5
   m_Name: ExclaimationMark
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -98,6 +99,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   targetTime: 0.5
+  timerText: {fileID: 0}
   timerEnd:
     m_PersistentCalls:
       m_Calls:
@@ -113,3 +115,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  setZero: 0
+  keepData: 0
+--- !u!114 &97166420392451949
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5999709920020418057}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 95439dc8d3ab916438baa463bb4de515, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  freezeXZAxis: 1
