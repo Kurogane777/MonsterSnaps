@@ -17,26 +17,26 @@ public class ProjectileEffects : MonoBehaviour
     {
         foreach (string tList in hitTag)
         {
-            //if (collider.gameObject.tag != tList)
-            //{
-            //    //Do Something
-            //    if (!hitOnce)
-            //    {
-            //        Instantiate(instance, transform.position, Quaternion.identity);
-            //        applyHitEvent.Invoke();
-            //        hitOnce = true;
-            //        Destroy(this.gameObject);
-            //    }
-            //}
-
-            //Do Something
-            if (!hitOnce)
+            if (collider.gameObject.tag == tList)
             {
-                Instantiate(instance, transform.position, Quaternion.identity);
-                applyHitEvent.Invoke();
-                hitOnce = true;
-                Destroy(this.gameObject);
+                //Do Something
+                if (!hitOnce)
+                {
+                    Instantiate(instance, transform.position, Quaternion.identity);
+                    applyHitEvent.Invoke();
+                    hitOnce = true;
+                    Destroy(this.gameObject);
+                }
             }
+
+            ////Do Something
+            //if (!hitOnce)
+            //{
+            //    Instantiate(instance, transform.position, Quaternion.identity);
+            //    applyHitEvent.Invoke();
+            //    hitOnce = true;
+            //    Destroy(this.gameObject);
+            //}
         }
     }
 }
